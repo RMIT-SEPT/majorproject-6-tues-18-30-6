@@ -3,7 +3,6 @@
 # Group 6.TUES-18:30-6
 
 ## Members
-* Gihan Abenayake (s3779792)
 * Micheal Kolev (s3719657)
 * Sami Yildirim (s3657570)
 * Xiaying Wang (s3570422)
