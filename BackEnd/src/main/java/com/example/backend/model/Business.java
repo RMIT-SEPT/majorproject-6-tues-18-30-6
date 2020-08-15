@@ -1,15 +1,24 @@
-package com.example.backend.main;
+package com.example.backend.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import com.example.backend.model.BusinessType;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private int ABN;
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<BusinessType> types = new HashSet<>();
+    //Enum for type of business
 
     private Date created_At;
     private Date updated_At;
