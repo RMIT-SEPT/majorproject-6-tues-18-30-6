@@ -1,19 +1,17 @@
 # RMIT SEPT 2020 Major Project
 
-# Group 00
+# Group 6.TUES-18:30-6
 
 ## Members
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
+* Micheal Kolev (s3719657)
+* Sami Yildirim (s3657570)
+* Xiaying Wang (s3570422)
+* Liangyu Nie (s3716113)
 
 ## Records
 
-* Github repository : https://github.com/RMIT-SEPT/MajorProject/Groupx
-* ClickUp Workspace : https://app.clickup.com/xxxx/yyyy
-
+* Github repository : https://github.com/RMIT-SEPT/majorproject-6-tues-18-30-6
+* Trello Workspace : https://trello.com/b/LQHRyBhg/6tues6306
 
 ## Code documentation
 
