@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/backend.iml" filepath="$PROJECT_DIR$/backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/majorproject.iml" filepath="$PROJECT_DIR$/majorproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-security-jwt.iml" filepath="$PROJECT_DIR$/spring-boot-security-jwt.iml" />
     </modules>
   </component>
 </project>
