@@ -14,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.sept.userlogin.security.jwt.AuthEntryPointJwt;
-import com.sept.userlogin.security.jwt.AuthTokenFilter;
-import com.sept.userlogin.security.services.UserDetailsServiceImpl;
+import com.sept.security.jwt.AuthEntryPointJwt;
+import com.sept.security.jwt.AuthTokenFilter;
+import com.sept.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
