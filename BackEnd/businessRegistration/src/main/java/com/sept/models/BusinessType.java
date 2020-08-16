@@ -1,4 +1,4 @@
-package com.sept.models.business;
+package com.sept.models;
 
 import javax.persistence.*;
 

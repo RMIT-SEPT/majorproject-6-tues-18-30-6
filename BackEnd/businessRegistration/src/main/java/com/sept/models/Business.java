@@ -1,4 +1,4 @@
-package com.sept.models.business;
+package com.sept.models;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,7 +12,7 @@ public class Business {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int ABN;
+    private int abn;
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -24,6 +24,12 @@ public class Business {
 
     public Business(){
 
+    }
+
+    public Business(String name, int abn, BusinessType type) {
+        this.name = name;
+        this.abn = abn;
+        this.types.add(type);
     }
 
     public Long getId() {

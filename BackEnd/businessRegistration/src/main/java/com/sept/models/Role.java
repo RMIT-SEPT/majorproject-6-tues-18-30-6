@@ -1,4 +1,4 @@
-package com.sept.models.userLogin;
+package com.sept.models;
 
 import javax.persistence.*;
 

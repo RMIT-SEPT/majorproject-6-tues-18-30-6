@@ -1,7 +1,8 @@
-package com.sept.models.userLogin;
+package com.sept.models;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
