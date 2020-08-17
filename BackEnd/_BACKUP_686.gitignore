@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -75,4 +76,11 @@ transaction-logs
 secrets.yml
 .gradletasknamecache
 .sts4-cachedidn
-
+=======
+creds.sh
+creds2.sh
+.terraform*
+terraform.tfstate
+terraform.tfstate.backup
+tmp/
+>>>>>>> master
