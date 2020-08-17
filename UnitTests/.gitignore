@@ -1,0 +1,8 @@
+creds.sh
+creds2.sh
+.terraform*
+terraform.tfstate
+terraform.tfstate.backup
+tmp/
+BackEnd/src/main/java/com/example/backend/main/Admin.java
+BackEnd/src/main/java/com/example/backend/main/Worker.java
