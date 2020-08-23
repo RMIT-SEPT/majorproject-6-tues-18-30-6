@@ -21,10 +21,12 @@ export default class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeUserType = this.onChangeUserType.bind(this);
 
     this.state = {
       username: "",
       password: "",
+      userType: "customer",
       loading: false,
       message: ""
     };
@@ -42,6 +44,12 @@ export default class Login extends Component {
     });
   }
 
+  onChangeUserType(e) {
+    this.setState({
+      userType: e.target.value
+    });
+  }
+
   handleLogin(e) {
     e.preventDefault();
 
@@ -53,7 +61,7 @@ export default class Login extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.username, this.state.password).then(
+      AuthService.login(this.state.username, this.state.password, this.state.userType).then(
         () => {
           this.props.history.push("/profile");
           window.location.reload();
@@ -117,6 +125,22 @@ export default class Login extends Component {
                 onChange={this.onChangePassword}
                 validations={[required]}
               />
+            </div>
+
+            <div className="form-group">
+              <select
+                name = 'userType'
+                className="form-control"
+                value = {this.state.userType}
+                onChange={this.onChangeUserType}
+              >
+                {this.state.loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <option value="customer">Customer</option>
+                <option value="worker">Worker</option>
+                <option value="admin">Administrator</option>
+              </select>
             </div>
 
             <div className="form-group">

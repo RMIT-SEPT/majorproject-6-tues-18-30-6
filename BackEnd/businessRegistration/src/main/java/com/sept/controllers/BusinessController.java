@@ -3,7 +3,6 @@ package com.sept.controllers;
 import com.sept.models.Business;
 import com.sept.models.BusinessType;
 import com.sept.payload.request.BusinessRegisterRequest;
-import com.sept.payload.request.SignupRequest;
 import com.sept.payload.response.MessageResponse;
 import com.sept.repository.BusinessRepository;
 import com.sept.repository.BusinessTypeRepository;
