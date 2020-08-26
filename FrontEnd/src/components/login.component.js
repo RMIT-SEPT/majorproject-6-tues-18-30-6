@@ -61,8 +61,22 @@ export default class Login extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.username, this.state.password, this.state.userType).then(
+      AuthService.login(this.state.username, this.state.password).then(
         () => {
+          switch(this.state.userType){
+            case 'customer':
+              this.props.history.push("/board-customer");
+              window.location.reload();
+              break;
+            case 'worker':
+              this.props.history.push("/board-worker");
+              window.location.reload();
+              break;
+            case 'admin':
+              this.props.history.push("/board-admin");
+              window.location.reload();
+              break;
+          }
           this.props.history.push("/profile");
           window.location.reload();
         },

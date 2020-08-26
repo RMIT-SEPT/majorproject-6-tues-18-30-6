@@ -3,12 +3,11 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {
-  login(username, password, userType) {
+  login(username, password) {
     return axios
       .post(API_URL + "signin", {
         username,
-        password,
-        userType
+        password
       })
       .then(response => {
         if (response.data.accessToken) {
