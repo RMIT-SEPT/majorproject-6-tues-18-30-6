@@ -9,6 +9,7 @@ class AuthService {
         username,
         password,
         userType
+
       })
       .then(response => {
         if (response.data.accessToken) {

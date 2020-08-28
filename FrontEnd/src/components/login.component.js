@@ -44,6 +44,7 @@ export default class Login extends Component {
     });
   }
 
+
   onChangeUserType(e) {
     this.setState({
       userType: e.target.value
@@ -62,6 +63,7 @@ export default class Login extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password, this.state.userType).then(
+
         () => {
           this.props.history.push("/profile");
           window.location.reload();
@@ -144,6 +146,7 @@ export default class Login extends Component {
             </div>
 
             <div className="form-group">
+
               <button
                 className="btn btn-primary btn-block"
                 disabled={this.state.loading}
