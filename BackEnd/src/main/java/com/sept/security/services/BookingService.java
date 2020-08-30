@@ -1,10 +1,8 @@
-package com.sept.userlogin.security.services;
+package com.sept.security.services;
 
 import java.math.BigInteger;
-
 import org.springframework.http.ResponseEntity;
-
-import com.sept.userlogin.models.Booking;
+import com.sept.models.Booking;
 
 public interface BookingService {
 	

@@ -1,4 +1,5 @@
-package com.sept.userlogin.controllers;
+package com.sept.controllers;
+
 import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,11 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.sept.userlogin.exceptions.BookingAlreadyPresentException;
 import com.sept.userlogin.exceptions.BookingNotFoundException;
-import com.sept.userlogin.models.Booking;
-import com.sept.userlogin.security.services.BookingService;
+import com.sept.models.Booking;
+import com.sept.security.services.BookingService;
 
 @RequestMapping("/booking")
 

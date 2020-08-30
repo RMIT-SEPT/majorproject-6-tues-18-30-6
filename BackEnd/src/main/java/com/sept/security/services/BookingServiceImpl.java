@@ -1,4 +1,4 @@
-package com.sept.userlogin.security.services;
+package com.sept.security.services;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.sept.userlogin.dao.BookingDao;
+import com.sept.dao.BookingDao;
 import com.sept.userlogin.exceptions.BookingAlreadyPresentException;
 import com.sept.userlogin.exceptions.BookingNotFoundException;
-import com.sept.userlogin.models.Booking;
+import com.sept.models.Booking;
 public class BookingServiceImpl implements BookingService {
 	/*
 	 * Creating DAO object
