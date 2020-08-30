@@ -1,4 +1,4 @@
-package com.sept.security;
+package com.sept.userlogin.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.sept.security.jwt.AuthEntryPointJwt;
-import com.sept.security.jwt.AuthTokenFilter;
-import com.sept.security.services.UserDetailsServiceImpl;
+import com.sept.userlogin.security.jwt.AuthEntryPointJwt;
+import com.sept.userlogin.security.jwt.AuthTokenFilter;
+import com.sept.userlogin.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

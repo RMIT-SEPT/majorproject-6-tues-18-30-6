@@ -1,4 +1,4 @@
-package com.sept.controllers;
+package com.sept.userlogin.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +20,6 @@ public class TestController {
 	public String userAccess() {
 		return "User Content.";
 	}
-
 
 	@GetMapping("/admin")
 	@PreAuthorize("hasRole('ADMIN')")

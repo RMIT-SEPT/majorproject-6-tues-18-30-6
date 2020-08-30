@@ -1,4 +1,4 @@
-package com.sept.userlogin.models;
+package com.sept.models;
 
 import java.math.BigInteger;
 import java.sql.Date;
