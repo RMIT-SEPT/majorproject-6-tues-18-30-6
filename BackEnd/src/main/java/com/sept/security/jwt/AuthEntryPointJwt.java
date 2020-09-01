@@ -1,4 +1,4 @@
-package com.sept.security.jwt;
+package com.sept.userlogin.security.jwt;
 
 import java.io.IOException;
 
