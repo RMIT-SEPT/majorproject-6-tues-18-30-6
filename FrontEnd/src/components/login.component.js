@@ -44,14 +44,11 @@ export default class Login extends Component {
     });
   }
 
-
-  onChangeUserType(e) {
+onChangeUserType(e) {
     this.setState({
       userType: e.target.value
     });
-  }
-
-  handleLogin(e) {
+handleLogin(e) {
     e.preventDefault();
 
     this.setState({
@@ -65,6 +62,20 @@ export default class Login extends Component {
       AuthService.login(this.state.username, this.state.password, this.state.userType).then(
 
         () => {
+          switch(this.state.userType){
+            case 'customer':
+              this.props.history.push("/board-customer");
+              window.location.reload();
+              break;
+            case 'worker':
+              this.props.history.push("/board-worker");
+              window.location.reload();
+              break;
+            case 'admin':
+              this.props.history.push("/board-admin");
+              window.location.reload();
+              break;
+          }
           this.props.history.push("/profile");
           window.location.reload();
         },
@@ -146,8 +157,7 @@ export default class Login extends Component {
             </div>
 
             <div className="form-group">
-
-              <button
+	    <button
                 className="btn btn-primary btn-block"
                 disabled={this.state.loading}
               >
