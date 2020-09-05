@@ -3,8 +3,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-
 import AuthService from "../services/auth.service";
+
 
 const required = value => {
   if (!value) {
@@ -55,6 +55,7 @@ export default class EditDetails extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
+
 
     this.state = {
       username: "",
@@ -189,6 +190,30 @@ export default class EditDetails extends Component {
                     value={this.state.password}
                     onChange={this.onChangePassword}
                     validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="address">Password</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="address"
+                    value={this.state.address}
+                    onChange={this.onChangeAddress}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="phone">Password</label>
+                  <Input
+                    type="tel"
+                    className="form-control"
+                    name="phone"
+                    value={this.state.phoneNumber}
+                    onChange={this.onChangePhone}
+                    validations={[required]}
                   />
                 </div>
 
