@@ -19,6 +19,11 @@ class UserService {
   getAdminBoard() {
     return axios.get(API_URL + 'admin', { headers: authHeader() });
   }
+
+  getBookingHistory(){
+    bookingPlaceholder = {"data" : {}};
+    return bookingPlaceholder;
+  }
 }
 
 export default new UserService();
