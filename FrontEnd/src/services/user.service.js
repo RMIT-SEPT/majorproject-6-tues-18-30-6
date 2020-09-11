@@ -20,9 +20,8 @@ class UserService {
     return axios.get(API_URL + 'admin', { headers: authHeader() });
   }
 
-  getBookingHistory(){
-    bookingPlaceholder = {"data" : {}};
-    return bookingPlaceholder;
+  getBookingHistory(user){
+    return axios.get(API_URL + 'bookingHistory', { headers: authHeader()}, {params: {id: user}})
   }
 }
 
