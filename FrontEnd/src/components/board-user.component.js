@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import UserService from "../services/user.service";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import BookingHistory from "/user-booking-history.component"
+import BookingHistory from "./user-booking-history.component"
 
 export default class BoardUser extends Component {
   constructor(props) {

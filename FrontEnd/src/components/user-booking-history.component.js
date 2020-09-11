@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 
-class BookingHistory extends React.Component {
+export default class BookingHistory extends React.Component {
     componentDidMount() {
         UserService.getBookingHistory(AuthService.getCurrentUser()).then(
           response => {
