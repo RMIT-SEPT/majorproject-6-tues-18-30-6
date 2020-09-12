@@ -45,10 +45,12 @@ export default class BoardUser extends Component {
         </TabList>
     
         <TabPanel>
-          <h2>{BookingHistory}</h2>
+        <div>
+          <BookingHistory />
+        </div>
         </TabPanel>
         <TabPanel>
-          <h2>Any content 2</h2>
+          <h2>{this.state.content}</h2>
         </TabPanel>
       </Tabs>
         </header>
