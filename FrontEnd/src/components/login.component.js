@@ -48,6 +48,8 @@ onChangeUserType(e) {
     this.setState({
       userType: e.target.value
     });
+  }
+
 handleLogin(e) {
     e.preventDefault();
 
@@ -75,6 +77,9 @@ handleLogin(e) {
               this.props.history.push("/board-admin");
               window.location.reload();
               break;
+            default:
+              this.props.history.push("/signin");
+              window.location.reload();
           }
           this.props.history.push("/profile");
           window.location.reload();
