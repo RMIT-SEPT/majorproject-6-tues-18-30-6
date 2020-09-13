@@ -90,7 +90,7 @@ public class AvailabilityController {
     }
 
     /**
-     * method to return if an employee is free for a perticular date, time and duration.
+     * method to return if an employee is free for a particular date, time and duration.
      * @param employeeId the employee to check
      * @param date the date to check
      * @param startTime the start time to check
