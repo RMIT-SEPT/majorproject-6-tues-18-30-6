@@ -11,6 +11,8 @@ public interface Interface {
     ArrayList<BusinessService> getServices(int businessid);
     ArrayList<Day> getDays();
     ArrayList<Shift> getShifts(int businessid);
+    ArrayList<WorkShift> getWorkShifts(int businessid);
+    ArrayList<Work> getAllWork(int businessid);
     Booking getBooking(int BusinessOwnerId, int bookingId);
     Booking getBookingForCustomer(int customerId,int bookingId);
     ArrayList<Booking> getBookings(int businessOwnerId);
@@ -39,8 +41,6 @@ public interface Interface {
     void saveEmployee(Employee newEmployee);
     int getEmployeeIdByName(String name);
     void removeEmployee(int id);
-	ArrayList<WorkShift> getWorkShifts(int businessid);
-	ArrayList<Work> getAllWork(int businessid);
 
 
 }

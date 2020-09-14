@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Class to hold the business hours of the business.
- */
+
 public class WorkShift {
 
     private static Logger logger = Logger.getLogger("WorkShift");

@@ -8,9 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-/**
- * Class to hold a shift
- */
+
 public class Shift {
 
     //Logger

@@ -20,12 +20,12 @@ public class LoginController {
 
     private final HttpSession session;
     private static Logger logger = Logger.getLogger("Login Controller");
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
 
     @Autowired
     public LoginController(HttpSession session) {
         this.session = session;
-        this.onlineBooking = Model.getModel();
+        this.onlineBookingSystem = Model.getModel();
     }
 
     @RequestMapping(path="/login", method = RequestMethod.GET)
@@ -36,13 +36,13 @@ public class LoginController {
     @RequestMapping(path="/", method = RequestMethod.GET)
     public ModelAndView login(){
         //check if business account is setup
-        if(onlineBooking.getAccountStatus() == 0) {
+        if(onlineBookingSystem.getAccountStatus() == 0) {
             logger.info("BO Account not set up");
             return new ModelAndView("redirect:/setup/login");
         }
         else {
             ModelAndView mav = new ModelAndView("landing");
-            List<BusinessOwner> bo = onlineBooking.getAllBusinessOwners();
+            List<BusinessOwner> bo = onlineBookingSystem.getAllBusinessOwners();
             mav.addObject("ownerList", bo);
             return mav;
         }
@@ -54,8 +54,8 @@ public class LoginController {
             @RequestParam String password
     ){
         //Check
-        Customer cust = onlineBooking.getCustomerByUsername(username);
-        BusinessOwner bo = onlineBooking.getBusinessOwnerByUsername(username);
+        Customer cust = onlineBookingSystem.getCustomerByUsername(username);
+        BusinessOwner bo = onlineBookingSystem.getBusinessOwnerByUsername(username);
         if(cust != null){
             //Handle Customer login
             if(!password.equals(cust.getPassword())){

@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class CustomerController{
 
     private HttpSession session;
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
 
     @Autowired
     public CustomerController(HttpSession session) {
         this.session = session;
-        this.onlineBooking = Model.getModel();
+        this.onlineBookingSystem = Model.getModel();
     }
 
     @RequestMapping(path="/dashboard")
@@ -36,10 +36,10 @@ public class CustomerController{
         }
 
         //Get all the businesses currently in system.
-        ArrayList<BusinessOwner> businesses = onlineBooking.getAllBusinessOwners();
+        ArrayList<BusinessOwner> businesses = onlineBookingSystem.getAllBusinessOwners();
 
         //Get the new bookings for the customer
-        ArrayList<Booking> bookings = onlineBooking.getUpcomingBookingsForCustomer(user.getId());
+        ArrayList<Booking> bookings = onlineBookingSystem.getUpcomingBookingsForCustomer(user.getId());
 
         //build the my bookings table
         ArrayList<TableRow> table = buildTable(bookings);
@@ -61,10 +61,10 @@ public class CustomerController{
         }
 
         //Get all the businesses currently in system.
-        ArrayList<BusinessOwner> businesses = onlineBooking.getAllBusinessOwners();
+        ArrayList<BusinessOwner> businesses = onlineBookingSystem.getAllBusinessOwners();
 
         //Get the past bookings for the customer
-        ArrayList<Booking> pastBookings = onlineBooking.getPastBookingsForCustomer(user.getId());
+        ArrayList<Booking> pastBookings = onlineBookingSystem.getPastBookingsForCustomer(user.getId());
 
         //build the my history table
         ArrayList<TableRow> historyTable = buildTable(pastBookings);
@@ -85,7 +85,7 @@ public class CustomerController{
             row.id = String.format("%d", b.getId());
             TableCell businessCell = new TableCell();
             //Get business owner object from the database
-            BusinessOwner bo = onlineBooking.getBusinessOwnerById(b.getBusinessService().getBusiness());
+            BusinessOwner bo = onlineBookingSystem.getBusinessOwnerById(b.getBusinessService().getBusiness());
             if (bo != null) {
                 businessCell.text = bo.getBusinessName();
             } else {

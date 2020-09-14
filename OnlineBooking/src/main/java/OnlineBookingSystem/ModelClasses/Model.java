@@ -140,7 +140,7 @@ public class Model implements Interface{
         return BusinessOwner.getById(businessOwnerId);
     }
 
-    
+ 
     @Override
     public Customer getCustomerByUsername(String username) {
         return Customer.getByUsername(username);

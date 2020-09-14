@@ -1,5 +1,6 @@
 package OnlineBookingSystem.DisplayClasses;
 
+
 public class BookingLink {
     public String text;
     public String href;

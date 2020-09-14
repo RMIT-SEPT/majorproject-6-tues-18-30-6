@@ -17,18 +17,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -57,7 +45,7 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.16.1</version>
         </dependency>
-<!--
+
         <dependency>
             <groupId>com.inflectra.spiratest.addons</groupId>
             <artifactId>junitextension</artifactId>
@@ -65,7 +53,7 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/spira.jar</systemPath>
         </dependency>
--->
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

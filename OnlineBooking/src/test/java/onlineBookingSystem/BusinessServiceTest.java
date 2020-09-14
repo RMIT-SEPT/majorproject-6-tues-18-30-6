@@ -1,8 +1,11 @@
-package OnlineBookingSystem.ModelClasses;
+package onlineBookingSystem;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import OnlineBookingSystem.ModelClasses.BusinessService;
+import OnlineBookingSystem.ModelClasses.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -24,11 +24,11 @@ import java.util.logging.Logger;
 public class BookingController {
 
     private HttpSession session;
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
     @Autowired
     public BookingController(HttpSession session) {
         this.session = session;
-        this.onlineBooking = Model.getModel();
+        this.onlineBookingSystem = Model.getModel();
     }
 
     private static Logger logger =Logger.getLogger("BookingController");
@@ -41,7 +41,7 @@ public class BookingController {
         //Check if the user is a business owner or a customer
         if(user instanceof BusinessOwner){
             //retrieve the booking from the database
-            Booking b = onlineBooking.getBooking(user.getId(), bookingId);
+            Booking b = onlineBookingSystem.getBooking(user.getId(), bookingId);
             if(b == null){
                 ModelAndView mav = new ModelAndView("redirect:/businessowner/dashboard");
                 redirectAttrs.addFlashAttribute("Error", "Invalid Booking Reference.");
@@ -53,7 +53,7 @@ public class BookingController {
         }
         if(user instanceof Customer){
             //retrieve the booking from the database
-            Booking b = onlineBooking.getBookingForCustomer(user.getId(),bookingId);
+            Booking b = onlineBookingSystem.getBookingForCustomer(user.getId(),bookingId);
             if(b == null){
                 ModelAndView mav = new ModelAndView("redirect:/customer/dashboard");
                 redirectAttrs.addFlashAttribute("Error", "Invalid Booking Reference");
@@ -200,8 +200,8 @@ public class BookingController {
      */
     private ModelAndView generateBookingForm(int businessId, int workId, RedirectAttributes redirectAttributes){
         //Need a list of customers
-        ArrayList<Customer> customers = onlineBooking.getAllCustomers();
-        ArrayList<Employee> employees = onlineBooking.getEmployees(businessId);
+        ArrayList<Customer> customers = onlineBookingSystem.getAllCustomers();
+        ArrayList<Employee> employees = onlineBookingSystem.getEmployees(businessId);
 
         //Check that at least one customer exists
         if(customers.size() == 0){
@@ -211,7 +211,7 @@ public class BookingController {
             return mav;
         }
 
-        Work w = onlineBooking.getWorkById(workId);
+        Work w = onlineBookingSystem.getWorkById(workId);
         Employee employee = null;
         LocalDateTime startTime = LocalDateTime.now();
         if(w != null){
@@ -226,7 +226,7 @@ public class BookingController {
             return new ModelAndView("redirect:/");
         }
         int employeeid = Employee.getEmployeeIdByName(employee.getName());
-        ArrayList<BusinessService> services = onlineBooking.getSpecialisedServices(employeeid, businessId);
+        ArrayList<BusinessService> services = onlineBookingSystem.getSpecialisedServices(employeeid, businessId);
 
         ModelAndView mav = new ModelAndView("boaddbooking");
 
@@ -248,8 +248,8 @@ public class BookingController {
             int employeeId,
             int serviceId) {
         //Get list of employees and services from the database
-        Employee employee = onlineBooking.getEmployee(employeeId);
-        BusinessService service = onlineBooking.getServiceById(serviceId);
+        Employee employee = onlineBookingSystem.getEmployee(employeeId);
+        BusinessService service = onlineBookingSystem.getServiceById(serviceId);
         //Get data and time objects, and calculate end time
         LocalDate ld = LocalDate.parse(dateString);
         LocalTime ltStart = LocalTime.parse(timeString);

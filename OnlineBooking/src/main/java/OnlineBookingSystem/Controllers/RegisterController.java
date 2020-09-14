@@ -17,10 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(path = "/register")
 public class RegisterController {
 
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
 
     public RegisterController(){
-    	onlineBooking = Model.getModel();
+    	onlineBookingSystem = Model.getModel();
     }
 
     @RequestMapping(path="/customer", method= RequestMethod.GET)
@@ -107,7 +107,7 @@ public class RegisterController {
         Customer newCustomer = new Customer(
                 firstName, lastName, email, username, password
         );
-        onlineBooking.saveCustomer(newCustomer);
+        onlineBookingSystem.saveCustomer(newCustomer);
 
         //Render the Login page with a message of Successful registration
         ModelAndView mav = new ModelAndView("redirect:/login");

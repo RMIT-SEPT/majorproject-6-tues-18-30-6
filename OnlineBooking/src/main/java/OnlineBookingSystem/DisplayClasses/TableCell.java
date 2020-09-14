@@ -1,5 +1,6 @@
 package OnlineBookingSystem.DisplayClasses;
 
+
 public class TableCell {
     public String text;
     public String displayClass;

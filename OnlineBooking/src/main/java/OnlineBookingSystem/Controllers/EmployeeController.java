@@ -25,11 +25,11 @@ public class EmployeeController {
     @Autowired
     public EmployeeController(HttpSession session) {
         this.session = session;
-        this.onlineBooking = Model.getModel();
+        this.onlineBookingSystem = Model.getModel();
     }
 
     private HttpSession session;
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
     /**
      * get a employee summary page
      * @return ModelAndView the rendered View.
@@ -43,8 +43,8 @@ public class EmployeeController {
             return new ModelAndView("redirect:/");
         }
         //get employees
-        ArrayList<Employee> employees = onlineBooking.getEmployees(user.getId());
-        ArrayList<BusinessService> allServices = onlineBooking.getServices(user.getId());
+        ArrayList<Employee> employees = onlineBookingSystem.getEmployees(user.getId());
+        ArrayList<BusinessService> allServices = onlineBookingSystem.getServices(user.getId());
         int servicesTotal = allServices.size();
 
         //If there are no servivces, redirect to dashboard insisting that at least 1 service needs to be present.
@@ -71,7 +71,7 @@ public class EmployeeController {
         //Table row, table data
         for(Employee e: employees) {
             //get the services the employee specialises in
-            ArrayList<BusinessService> services = onlineBooking.getSpecialisedServices(e.getId(), user.getId());
+            ArrayList<BusinessService> services = onlineBookingSystem.getSpecialisedServices(e.getId(), user.getId());
             //initialise the row
             TableRow row = new TableRow();
             row.heading = e.getName();
@@ -121,7 +121,7 @@ public class EmployeeController {
             session.invalidate();
             return new ModelAndView("redirect:/");
         }
-        ArrayList<BusinessService> services = onlineBooking.getServices(user.getId());
+        ArrayList<BusinessService> services = onlineBookingSystem.getServices(user.getId());
         ModelAndView mav = new ModelAndView("employeeadd");
         mav.addObject("services", services);
         BusinessOwner b = BusinessOwner.getById(Integer.parseInt(session.getAttribute("id").toString()));
@@ -154,7 +154,7 @@ public class EmployeeController {
         }
 
         ModelAndView mav = new ModelAndView("employeeadd");
-        ArrayList<BusinessService> services = onlineBooking.getServices(user.getId());
+        ArrayList<BusinessService> services = onlineBookingSystem.getServices(user.getId());
         mav.addObject("services", services);
         BusinessOwner b = BusinessOwner.getById(Integer.parseInt(session.getAttribute("id").toString()));
         mav.addObject("owner", b);
@@ -189,7 +189,7 @@ public class EmployeeController {
         }
 
         // Employee name must be unique
-        if(onlineBooking.getEmployeeIdByName(name) != -1) {
+        if(onlineBookingSystem.getEmployeeIdByName(name) != -1) {
             mav.addObject("Error", "Employee has already added!");
             mav.setStatus(HttpStatus.BAD_REQUEST);
             return mav;
@@ -204,8 +204,8 @@ public class EmployeeController {
         //Build the employee object
         Employee newEmployee = new Employee( businessId, name, email, phone, address );
         //Write to DB
-        onlineBooking.saveEmployee(newEmployee);
-        int employeeid = onlineBooking.getEmployeeIdByName(name);
+        onlineBookingSystem.saveEmployee(newEmployee);
+        int employeeid = onlineBookingSystem.getEmployeeIdByName(name);
 
         buildSpecialisations(service, employeeid);
         //Redirect to Dashboard.
@@ -315,7 +315,7 @@ public class EmployeeController {
         }
         
         // check if there are any affected bookings
-        ArrayList<Booking> bookings = onlineBooking.getBookingsForEmployee(id);
+        ArrayList<Booking> bookings = onlineBookingSystem.getBookingsForEmployee(id);
         
         // determine if there are any bookings in the future
         for (Booking b: bookings) {
@@ -325,14 +325,14 @@ public class EmployeeController {
         	}
         }
 
-        ArrayList<Work> works = onlineBooking.getAllWorkForEmployee(id);
+        ArrayList<Work> works = onlineBookingSystem.getAllWorkForEmployee(id);
         if(works.size() > 0 ){
             session.setAttribute("Error", "This employee is rostered to work, please unroster the employee first.");
             return mav;
         }
 
         // if there are no bookings in the future then set deleted flag for employee and all associated bookings
-        onlineBooking.removeEmployee(id);
+        onlineBookingSystem.removeEmployee(id);
         BusinessOwner b = BusinessOwner.getById(Integer.parseInt(session.getAttribute("id").toString()));
         mav.addObject("owner", b);
         return mav;
@@ -359,7 +359,7 @@ public class EmployeeController {
             return new ModelAndView("redirect:/");
         }
         //Get the employee from Database
-        Employee employee = onlineBooking.getEmployee(id);
+        Employee employee = onlineBookingSystem.getEmployee(id);
         ModelAndView mav = new ModelAndView("employeeview");
         mav.addObject("employee", employee);
         BusinessOwner b = BusinessOwner.getById(Integer.parseInt(session.getAttribute("id").toString()));

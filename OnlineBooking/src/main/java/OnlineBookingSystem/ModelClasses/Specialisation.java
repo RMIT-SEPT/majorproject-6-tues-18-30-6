@@ -4,9 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-/**
- * Created by patstockwell on 23/4/17.
- */
+
 public class Specialisation {
 
     private int employee;

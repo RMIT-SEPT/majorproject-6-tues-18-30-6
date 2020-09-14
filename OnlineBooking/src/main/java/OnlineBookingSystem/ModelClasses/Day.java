@@ -9,6 +9,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Created by boblo on 28/03/2017.
+ */
 public class Day {
 
     //Logger

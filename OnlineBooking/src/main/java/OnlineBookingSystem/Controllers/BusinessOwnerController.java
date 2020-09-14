@@ -27,12 +27,12 @@ public class BusinessOwnerController {
     //Session needed to validate the user when requests come in
     private HttpSession session;
     private static Logger logger =Logger.getLogger("BusinessOwnerController");
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
 
     @Autowired
     public BusinessOwnerController(HttpSession session) {
         this.session = session;
-        this.onlineBooking = Model.getModel();
+        this.onlineBookingSystem = Model.getModel();
     }
 
     @RequestMapping(path="/service/add", method=RequestMethod.POST)
@@ -50,7 +50,7 @@ public class BusinessOwnerController {
         // TODO: ugly fix, need to clean it
         if(duration <= 0) {
             ModelAndView modelAndView = new ModelAndView("service");
-            ArrayList<BusinessService> services = onlineBooking.getServices(user.getId());
+            ArrayList<BusinessService> services = onlineBookingSystem.getServices(user.getId());
             modelAndView.addObject("services", services);
             BusinessOwner b = BusinessOwner.getById(Integer.parseInt(session.getAttribute("id").toString()));
             modelAndView.addObject("owner", b);
@@ -60,7 +60,7 @@ public class BusinessOwnerController {
             return modelAndView;
         } else if(serviceName.isEmpty()) {
             ModelAndView modelAndView = new ModelAndView("service");
-            ArrayList<BusinessService> services = onlineBooking.getServices(user.getId());
+            ArrayList<BusinessService> services = onlineBookingSystem.getServices(user.getId());
             modelAndView.addObject("services", services);
             BusinessOwner b = BusinessOwner.getById(Integer.parseInt(session.getAttribute("id").toString()));
             modelAndView.addObject("owner", b);
@@ -97,7 +97,7 @@ public class BusinessOwnerController {
             return new ModelAndView("redirect:/");
         }
         //get services
-        ArrayList<BusinessService> services = onlineBooking.getServices(user.getId());
+        ArrayList<BusinessService> services = onlineBookingSystem.getServices(user.getId());
 
         //create table
         ArrayList<TableCell> headers = new ArrayList<>();
@@ -150,17 +150,17 @@ public class BusinessOwnerController {
         //create page and model object that will be returned
         ModelAndView mav = new ModelAndView();
         //get the service to be cancelled
-        BusinessService s = onlineBooking.getServiceById(serviceId);
+        BusinessService s = onlineBookingSystem.getServiceById(serviceId);
         //get all bookings for the selected service
-        ArrayList<Booking> bookings = onlineBooking.getBookingsForService(serviceId);
+        ArrayList<Booking> bookings = onlineBookingSystem.getBookingsForService(serviceId);
         if(s == null){ //check the service exists in the database
             mav.setViewName("redirect:/businessowner/dashboard");
             redirectAttrs.addFlashAttribute("Error", "Invalid Service Reference.");
             logger.warning("Could not find service with ID: " + serviceId);
         }
         else if(bookings.isEmpty()){ //then ok to remove service
-        	onlineBooking.deleteSpecialisations(serviceId);
-        	onlineBooking.deleteService(serviceId);
+        	onlineBookingSystem.deleteSpecialisations(serviceId);
+        	onlineBookingSystem.deleteService(serviceId);
             redirectAttrs.addFlashAttribute("Message", "Service successfully removed.");
             mav.setViewName("redirect:/businessowner/service");
             logger.finest("Cancelled Service: " + s.getServiceName());
@@ -192,15 +192,15 @@ public class BusinessOwnerController {
         ArrayList<TableRow> table = new ArrayList<>();
 
         //Need list of days
-        ArrayList<Day> days = onlineBooking.getDays();
+        ArrayList<Day> days = onlineBookingSystem.getDays();
         //Need list of shifts
-        ArrayList<Shift> shifts = onlineBooking.getShifts(user.getId());
+        ArrayList<Shift> shifts = onlineBookingSystem.getShifts(user.getId());
         //Need list of workshifts
-        ArrayList<WorkShift> workShifts = onlineBooking.getWorkShifts(user.getId());
+        ArrayList<WorkShift> workShifts = onlineBookingSystem.getWorkShifts(user.getId());
         //Need list of Work
-        ArrayList<Work> works = onlineBooking.getAllWork(user.getId());
+        ArrayList<Work> works = onlineBookingSystem.getAllWork(user.getId());
         //Need list of Bookings
-        ArrayList<Booking> bookings = onlineBooking.getBookings(user.getId());
+        ArrayList<Booking> bookings = onlineBookingSystem.getBookings(user.getId());
 
         //Build table headers which is just the Days
         TableCell topLeftCell = new TableCell();

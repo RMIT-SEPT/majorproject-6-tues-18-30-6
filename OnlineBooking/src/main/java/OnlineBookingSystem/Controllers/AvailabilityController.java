@@ -30,12 +30,12 @@ public class AvailabilityController {
 
     private static Logger logger = Logger.getLogger("AvailabilityController");
     private HttpSession session;
-    private Interface onlineBooking;
+    private Interface onlineBookingSystem;
 
     @Autowired
     public AvailabilityController(HttpSession session) {
         this.session = session;
-        this.onlineBooking = Model.getModel();
+        this.onlineBookingSystem = Model.getModel();
     }
 
     /**
@@ -77,7 +77,7 @@ public class AvailabilityController {
         mav.addObject("selectedServiceId", selectedServiceId);
 
         // Check if table is required
-        BusinessService selectedService = onlineBooking.getServiceById(selectedServiceId);
+        BusinessService selectedService = onlineBookingSystem.getServiceById(selectedServiceId);
         if(selectedServiceId == -1 || selectedEmployeeId == -1 || selectedService == null) {
             mav.addObject("tableisvisible", false);
             return mav;
@@ -90,7 +90,7 @@ public class AvailabilityController {
     }
 
     /**
-     * method to return if an employee is free for a particular date, time and duration.
+     * method to return if an employee is free for a perticular date, time and duration.
      * @param employeeId the employee to check
      * @param date the date to check
      * @param startTime the start time to check
@@ -151,6 +151,12 @@ public class AvailabilityController {
                 break;
             }
 
+            //Falling through here means that the booking started within the shift and ends after the end of this shift.
+            //We now need to look for consecutive shifts such that the booking ends in the next shift.
+
+            //Look for another shift that is immediately after this one and join it on.
+            //Loop through every shift again and look for a shift that is consequtive.
+            //Continue searching if there is a new end time found, otherwise exit.
             boolean needToSearchAgain = true;
             while(needToSearchAgain){
                 //Assume that there is no subsequent shift found, if one is found, set it to true.
@@ -200,7 +206,7 @@ public class AvailabilityController {
     }
 
     private void addEmployeeOptionsToMav(ModelAndView mav, int businessid, int selectedEmployeeId, int serviceid) {
-        ArrayList<Employee> employees = onlineBooking.getEmployeesByService(businessid, serviceid);
+        ArrayList<Employee> employees = onlineBookingSystem.getEmployeesByService(businessid, serviceid);
         ArrayList<Option> employeeOptions = new ArrayList<>();
 
         for(Employee e: employees){
@@ -216,7 +222,7 @@ public class AvailabilityController {
     }
 
     private void addServiceOptionsToMav(ModelAndView mav, int businessid, int selectedServiceId, int employeeId) {
-        ArrayList<BusinessService> services = onlineBooking.getServices(businessid);
+        ArrayList<BusinessService> services = onlineBookingSystem.getServices(businessid);
         ArrayList<Option> serviceOptions = new ArrayList<>();
         for(BusinessService s: services){
             Option o = new Option();
@@ -236,7 +242,7 @@ public class AvailabilityController {
             int selectedEmployeeId,
             int selectedServiceId,
             BusinessService selectedService) {
-        ArrayList<Day> days = onlineBooking.getDays();
+        ArrayList<Day> days = onlineBookingSystem.getDays();
         addHeadersToTable(mav, days);
         addShiftsToTable(mav, days, businessid, selectedEmployeeId, selectedServiceId, selectedService);
     }
@@ -264,9 +270,9 @@ public class AvailabilityController {
             int selectedServiceId,
             BusinessService selectedService) {
         ArrayList<TableRow> table = new ArrayList<>();
-        ArrayList<Shift> shifts = onlineBooking.getShifts(businessid);
-        ArrayList<WorkShift> workShifts = onlineBooking.getWorkShifts(businessid);
-        ArrayList<Work> works = onlineBooking.getAllWork(businessid);
+        ArrayList<Shift> shifts = onlineBookingSystem.getShifts(businessid);
+        ArrayList<WorkShift> workShifts = onlineBookingSystem.getWorkShifts(businessid);
+        ArrayList<Work> works = onlineBookingSystem.getAllWork(businessid);
 
         for(Shift shift : shifts){
             LocalTime currentTime = LocalTime.of(shift.getStartHour(), shift.getStartMin());

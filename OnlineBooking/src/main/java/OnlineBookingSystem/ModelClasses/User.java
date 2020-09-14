@@ -1,8 +1,6 @@
 package OnlineBookingSystem.ModelClasses;
 
-/**
- * Abstract User class to store username and password.
- */
+
 public abstract class User {
 
     public User(int id, String username, String password) {
