@@ -20,7 +20,7 @@ public class Database {
         db = this;
         File f = new File("./onlineBooking.db");
         if(!f.exists()){
-            db.connect("jdbc:sqlite:./obs.db");
+            db.connect("jdbc:sqlite:./onlineBooking.db");
             InputStream createDb = getClass().getResourceAsStream("/SQL/createdb.sql");
             db.executeFromFile(createDb);
             InputStream initLive = getClass().getResourceAsStream("/SQL/initLiveDb.sql");
@@ -121,7 +121,6 @@ public class Database {
         try{
             //populate initsql from init file
             logger.info("Generating Bookings");
-            //Get the Monday 9:30am
             LocalDate ld = LocalDate.now();
             Timestamp monday = Timestamp.valueOf(ld.with(DayOfWeek.MONDAY).atTime(9,30));
             Timestamp thursday = Timestamp.valueOf(ld.with(DayOfWeek.THURSDAY).atTime(12,30));
