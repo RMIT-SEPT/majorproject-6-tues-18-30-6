@@ -3,6 +3,7 @@ import axios from "axios";
 //const API_URL = "http://localhost:8080/api/auth/";
 //replace this line with the url for your postman mock, or use the above line instead to access the backend
 const API_URL = "https://d1acfa87-1e9b-4cd4-b66d-9481395b1b9e.mock.pstmn.io/"
+
 class AuthService {
   login(username, password, userType) {
     return axios
@@ -10,7 +11,6 @@ class AuthService {
         username,
         password,
         userType
-
       })
       .then(response => {
         if (response.data.accessToken) {

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import BookingHistory from "./user-booking-history.component"
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -35,7 +38,21 @@ export default class BoardUser extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+        <Tabs>
+        <TabList>
+          <Tab>Booking History</Tab>
+          <Tab>Edit Details</Tab>
+        </TabList>
+    
+        <TabPanel>
+        <div>
+          <BookingHistory />
+        </div>
+        </TabPanel>
+        <TabPanel>
+          <h2>{this.state.content}</h2>
+        </TabPanel>
+      </Tabs>
         </header>
       </div>
     );

@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.sept.models.Booking;
+
 import com.sept.models.User;
 import com.sept.repository.BookingRepository;
 import com.sept.repository.UserRepository;
