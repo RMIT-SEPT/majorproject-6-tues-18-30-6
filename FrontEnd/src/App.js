@@ -10,8 +10,9 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
+import BoardWorker from "./components/board-worker.component";
 import BoardAdmin from "./components/board-admin.component";
+import EditDetails from "./components/user-edit-details.component";
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
+      showWorkerBoard: false,
       showAdminBoard: false,
       currentUser: undefined
     };
@@ -27,11 +28,12 @@ class App extends Component {
 
   componentDidMount() {
     const user = AuthService.getCurrentUser();
+    console.log(user)
 
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        showWorkerBoard: user.roles.includes("ROLE_WORKER"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN")
       });
     }
@@ -42,7 +44,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showWorkerBoard, showAdminBoard } = this.state;
 
     return (
       <Router>
@@ -58,10 +60,10 @@ class App extends Component {
                 </Link>
               </li>
 
-              {showModeratorBoard && (
+              {showWorkerBoard && (
                 <li className="nav-item">
-                  <Link to={"/mod"} className="nav-link">
-                    Moderator Board
+                  <Link to={"/worker"} className="nav-link">
+                    Worker Board
                   </Link>
                 </li>
               )}
@@ -120,8 +122,10 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/user" component={BoardUser} />
-              <Route path="/mod" component={BoardModerator} />
+              <Route path="/user/editDetails" component={EditDetails} />
+              <Route path="/worker" component={BoardWorker} />
               <Route path="/admin" component={BoardAdmin} />
+              
             </Switch>
           </div>
         </div>
