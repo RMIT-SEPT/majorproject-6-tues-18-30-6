@@ -218,7 +218,7 @@ export default class EditDetails extends Component {
                 </div>
 
                 <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                  <button className="btn btn-primary btn-block">Confirm Details</button>
                 </div>
               </div>
             )}
