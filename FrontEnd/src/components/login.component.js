@@ -44,13 +44,15 @@ export default class Login extends Component {
     });
   }
 
-onChangeUserType(e) {
+  onChangeUserType(e) {
     this.setState({
       userType: e.target.value
     });
   }
 
+
 handleLogin(e) {
+
     e.preventDefault();
 
     this.setState({
@@ -64,7 +66,7 @@ handleLogin(e) {
       AuthService.login(this.state.username, this.state.password, this.state.userType).then(
 
         () => {
-          switch(this.state.userType){
+          switch (this.state.userType) {
             case 'customer':
               this.props.history.push("/board-customer");
               window.location.reload();
@@ -78,8 +80,10 @@ handleLogin(e) {
               window.location.reload();
               break;
             default:
-              this.props.history.push("/board-customer");
-              window.location.reload();
+              this.setState({
+                loading: false,
+                message: "Invalid user type"
+              });
           }
           this.props.history.push("/profile");
           window.location.reload();
@@ -147,9 +151,9 @@ handleLogin(e) {
 
             <div className="form-group">
               <select
-                name = 'userType'
+                name='userType'
                 className="form-control"
-                value = {this.state.userType}
+                value={this.state.userType}
                 onChange={this.onChangeUserType}
               >
                 {this.state.loading && (
@@ -162,7 +166,7 @@ handleLogin(e) {
             </div>
 
             <div className="form-group">
-	    <button
+              <button
                 className="btn btn-primary btn-block"
                 disabled={this.state.loading}
               >

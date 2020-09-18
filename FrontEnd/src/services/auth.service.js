@@ -33,6 +33,16 @@ class AuthService {
     });
   }
 
+  editDetails(username, email, password, address, phone){
+    return axios.post(API_URL + "editDetails", {
+      username,
+      email,
+      password,
+      address,
+      phone
+    });
+  }
+
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));;
   }
