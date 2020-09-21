@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
 
 
 const required = value => {
@@ -37,7 +38,7 @@ const vusername = value => {
 };
 
 const vpassword = value => {
-  if (value.length < 6 || value.length > 40) {
+  if ((value.length > 0) && (value.length < 6 || value.length > 40)) {
     return (
       <div className="alert alert-danger" role="alert">
         The password must be between 6 and 40 characters.
@@ -56,8 +57,7 @@ export default class EditDetails extends Component {
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
 
-
-    this.state = {
+    this.state ={
       username: "",
       email: "",
       password: "",
@@ -66,6 +66,31 @@ export default class EditDetails extends Component {
       successful: false,
       message: ""
     };
+
+    UserService.getDetails(AuthService.getCurrentUser()).then(
+      response => {
+        this.setState({
+          username: response.data.username,
+          email: response.data.email,
+          password: "",
+          address: response.data.address,
+          phoneNumber: response.data.phoneNumber,
+          successful: false,
+          message: ""
+        });
+        console.log(response)
+      },
+      error => {
+        this.setState({
+          content:
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString()
+        });
+      }
+    );
   }
 
   onChangeUsername(e) {
@@ -141,14 +166,6 @@ export default class EditDetails extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
           <Form
             onSubmit={this.handleDetails}
             ref={c => {
@@ -189,7 +206,7 @@ export default class EditDetails extends Component {
                     name="password"
                     value={this.state.password}
                     onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
+                    validations={[vpassword]}
                   />
                 </div>
 
@@ -244,8 +261,6 @@ export default class EditDetails extends Component {
               }}
             />
           </Form>
-        </div>
-      </div>
     );
   }
 }

@@ -4,6 +4,9 @@ import UserService from "../services/user.service";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BookingHistory from "./user-booking-history.component"
+import EditDetails from "./user-edit-details.component";
+import ViewAvailable from "./user-ViewAvailable.component";
+import SearchPage from "./user-SearchBooking.component";
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -42,6 +45,8 @@ export default class BoardUser extends Component {
         <TabList>
           <Tab>Booking History</Tab>
           <Tab>Edit Details</Tab>
+          <Tab>View Bookings</Tab>
+          <Tab>Search Bookings</Tab>
         </TabList>
     
         <TabPanel>
@@ -50,7 +55,13 @@ export default class BoardUser extends Component {
         </div>
         </TabPanel>
         <TabPanel>
-          <h2>{this.state.content}</h2>
+          <EditDetails />
+        </TabPanel>
+        <TabPanel>
+          <ViewAvailable />
+        </TabPanel>
+        <TabPanel>
+          <SearchPage />
         </TabPanel>
       </Tabs>
         </header>
