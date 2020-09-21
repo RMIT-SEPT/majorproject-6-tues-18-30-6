@@ -12,7 +12,7 @@
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-6-tues-18-30-6
 * Trello Workspace : https://trello.com/b/LQHRyBhg/6tues6306
-* CircleCI:https://app.circleci.com/pipelines/github/RMIT-SEPT/majorproject-6-tues-18-30-6
+* CircleCI: https://app.circleci.com/pipelines/github/RMIT-SEPT/majorproject-6-tues-18-30-6
 * AWS:
 ## Code documentation
 
