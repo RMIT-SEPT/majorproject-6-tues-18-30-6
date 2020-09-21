@@ -33,6 +33,7 @@ public class BookingController {
 
     private static Logger logger =Logger.getLogger("BookingController");
 
+
     @RequestMapping(path = "/cancel/{bookingid}")
     public ModelAndView cancelBooking(
             @PathVariable(name="bookingid") int bookingId,

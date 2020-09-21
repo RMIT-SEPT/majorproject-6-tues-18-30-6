@@ -28,7 +28,7 @@ public class LoginController {
         this.onlineBookingSystem = Model.getModel();
     }
 
-    @RequestMapping(path="/login", method = RequestMethod.GET)
+    @RequestMapping(path="login", method = RequestMethod.GET)
     public ModelAndView explicitLogin(){
         return new ModelAndView("login");
     }
