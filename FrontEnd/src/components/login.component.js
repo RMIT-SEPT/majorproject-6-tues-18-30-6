@@ -26,7 +26,6 @@ export default class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      userType: "customer",
       loading: false,
       message: ""
     };
@@ -146,22 +145,6 @@ handleLogin(e) {
                 onChange={this.onChangePassword}
                 validations={[required]}
               />
-            </div>
-
-            <div className="form-group">
-              <select
-                name='userType'
-                className="form-control"
-                value={this.state.userType}
-                onChange={this.onChangeUserType}
-              >
-                {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <option value="customer">Customer</option>
-                <option value="worker">Worker</option>
-                <option value="admin">Administrator</option>
-              </select>
             </div>
 
             <div className="form-group">
