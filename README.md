@@ -12,7 +12,8 @@
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-6-tues-18-30-6
 * Trello Workspace : https://trello.com/b/LQHRyBhg/6tues6306
-
+* CircleCI:
+* AWS:
 ## Code documentation
 
 [Quick Start](/docs/README.md) in `docs` folder
