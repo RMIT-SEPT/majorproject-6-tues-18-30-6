@@ -4,8 +4,8 @@ import OnlineBookingSystem.Controllers.EmployeeController;
 import OnlineBookingSystem.ModelClasses.Interface;
 import OnlineBookingSystem.ModelClasses.Model;
 import OnlineBookingSystem.ModelClasses.Role;
-import com.inflectra.spiratest.addons.junitextension.SpiraTestCase;
-import com.inflectra.spiratest.addons.junitextension.SpiraTestConfiguration;
+//import com.inflectra.spiratest.addons.junitextension.SpiraTestCase;
+//import com.inflectra.spiratest.addons.junitextension.SpiraTestConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -85,7 +85,7 @@ public class EmployeeControllerTest
     }
 
     @Test
-    @SpiraTestCase(testCaseId = 2278)
+    //@SpiraTestCase(testCaseId = 2278)
     public void addInvalidEmployeeWithNoName() throws Exception
     {
         EmployeeController employeeController = new EmployeeController(this.httpSession);
@@ -103,7 +103,7 @@ public class EmployeeControllerTest
     }
 
     @Test
-    @SpiraTestCase(testCaseId = 2279)
+    //@SpiraTestCase(testCaseId = 2279)
     public void addInvalidChinesePhoneNumber() throws Exception
     {
         EmployeeController employeeController = new EmployeeController(this.httpSession);

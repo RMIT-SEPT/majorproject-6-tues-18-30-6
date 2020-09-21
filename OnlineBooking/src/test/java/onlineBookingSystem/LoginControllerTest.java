@@ -5,8 +5,8 @@ import OnlineBookingSystem.ModelClasses.Interface;
 import OnlineBookingSystem.ModelClasses.Model;
 import OnlineBookingSystem.ModelClasses.Role;
 import OnlineBookingSystem.ModelClasses.User;
-import com.inflectra.spiratest.addons.junitextension.SpiraTestCase;
-import com.inflectra.spiratest.addons.junitextension.SpiraTestConfiguration;
+//import com.inflectra.spiratest.addons.junitextension.SpiraTestCase;
+//import com.inflectra.spiratest.addons.junitextension.SpiraTestConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ public class LoginControllerTest
     private LoginController loginController;
 
     @Test
-    @SpiraTestCase(testCaseId = 2248)
+    //@SpiraTestCase(testCaseId = 2248)
     public void performValidAdminLoginTest()
     {
         ModelAndView modelAndView = loginController.login("whatever", "1234567890");
@@ -47,7 +47,7 @@ public class LoginControllerTest
     }
 
     @Test
-    @SpiraTestCase(testCaseId = 2249)
+    //@SpiraTestCase(testCaseId = 2249)
     public void performValidCustomerLoginTest()
     {
         // Do a admin login
@@ -67,7 +67,7 @@ public class LoginControllerTest
     }
 
     @Test
-    @SpiraTestCase(testCaseId = 2251)
+    //@SpiraTestCase(testCaseId = 2251)
     public void performInvalidAdminLoginTest()
     {
         // Do a invalid admin login
@@ -87,7 +87,7 @@ public class LoginControllerTest
     }
 
     @Test
-    @SpiraTestCase(testCaseId = 2250)
+    //@SpiraTestCase(testCaseId = 2250)
     public void performInvalidCustomerLoginTest() throws Exception
     {
         // Do a invalid admin login
