@@ -1,0 +1,52 @@
+version: 2.0
+
+jobs:
+  buildBackend:
+
+    working_directory: ~/repo/BackEnd
+
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+    steps:
+      - checkout:
+          add path: ~/repo
+
+      - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: circleci-demo-java-spring-{{ checksum "BackEnd/pom.xml" }}
+
+      - run: mvn -f BackEnd/ dependency:go-offline # gets the project dependencies
+
+      - save_cache: # saves the project dependencies
+          paths:
+            - ~/.m2
+          key: circleci-demo-java-spring-{{ checksum "BackEnd/pom.xml" }}
+
+      - run: mvn -f BackEnd/ package # run the actual tests
+
+      - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard.
+          # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: target/surefire-reports
+
+      - store_artifacts: # store the uberjar as an artifact
+          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: target/demo-java-spring-0.0.1-SNAPSHOT.jar
+        # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+  buildFrontend:
+    working_directory: ~/repo/FrontEnd
+
+    docker:
+      - image: circleci/node:12.9.1-browsers
+    steps:
+      - checkout
+
+      - run: npm install FrontEnd
+
+
+
+workflows:
+  version: 2
+  build_all:
+    jobs:
+      - buildBackend
+      - buildFrontend
