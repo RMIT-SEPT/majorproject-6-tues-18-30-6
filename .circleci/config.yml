@@ -42,8 +42,6 @@ jobs:
 
       - run: npm install FrontEnd
 
-      - run: npm test FrontEnd
-
 
 
 workflows:
