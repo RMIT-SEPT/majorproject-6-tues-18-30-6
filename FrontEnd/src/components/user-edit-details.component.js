@@ -47,6 +47,16 @@ const vpassword = value => {
   }
 };
 
+const vphone = value => {
+  if (value.length !== 10) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Phone number must be exactly 10 characters.
+      </div>
+    );
+  }
+}
+
 export default class EditDetails extends Component {
   constructor(props) {
     super(props);
@@ -113,13 +123,13 @@ export default class EditDetails extends Component {
 
   onChangeAddress(e) {
     this.setState({
-      username: e.target.value
+      address: e.target.value
     });
   }
 
   onChangePhone(e) {
     this.setState({
-      username: e.target.value
+      phoneNumber: e.target.value
     });
   }
 
@@ -211,7 +221,7 @@ export default class EditDetails extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="address">Password</label>
+                  <label htmlFor="address">Address</label>
                   <Input
                     type="text"
                     className="form-control"
@@ -223,14 +233,14 @@ export default class EditDetails extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="phone">Password</label>
+                  <label htmlFor="phone">Phone Number</label>
                   <Input
                     type="tel"
                     className="form-control"
                     name="phone"
                     value={this.state.phoneNumber}
                     onChange={this.onChangePhone}
-                    validations={[required]}
+                    validations={[vphone, required]}
                   />
                 </div>
 
