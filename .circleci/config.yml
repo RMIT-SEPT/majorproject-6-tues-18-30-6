@@ -40,12 +40,9 @@ jobs:
     steps:
       - checkout
 
-      - run: cd FrontEnd
-      - run: ls
+      - run: npm install FrontEnd
 
-      - run: npm install
-
-      - run: npm test
+      - run: npm test FrontEnd
 
 
 
