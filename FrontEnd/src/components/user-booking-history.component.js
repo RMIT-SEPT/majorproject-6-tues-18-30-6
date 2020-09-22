@@ -19,7 +19,7 @@ export default class BookingHistory extends React.Component {
         this.setState({
           bookingHistory: response.data
         });
-        console.log(response)
+        console.log(response.data)
       },
       error => {
         this.setState({
