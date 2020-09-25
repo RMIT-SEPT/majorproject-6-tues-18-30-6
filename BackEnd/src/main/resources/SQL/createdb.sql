@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS specialisation (
 );
 
 CREATE TABLE IF NOT EXISTS availability (
-  empId INTEGER
-  id INTEGER AUTOINCREMENT,
+  empId INTEGER,
+  id INTEGER,
   name TEXT NOT NULL,
   date DATE NOT NULL,
   startHour INTEGER NOT NULL,

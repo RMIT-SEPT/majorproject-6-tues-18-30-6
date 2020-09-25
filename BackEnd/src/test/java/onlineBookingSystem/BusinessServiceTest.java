@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BusinessServiceTest {
 
     @BeforeAll
-    public void initialise(){
+    public static void initialise(){
         Database.initTest();
     }
 
