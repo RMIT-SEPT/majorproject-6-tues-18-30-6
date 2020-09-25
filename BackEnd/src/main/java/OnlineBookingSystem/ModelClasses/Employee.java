@@ -3,6 +3,7 @@ package OnlineBookingSystem.ModelClasses;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Employee {
@@ -15,8 +16,9 @@ public class Employee {
     private String phone;
     private String address;
     private Boolean deleted = false;
+    private List<Shift> availability;
 
-    private Employee(int id, int business, String name, String email, String phone, String address, Boolean deleted) {
+    private Employee(int id, int business, String name, String email, String phone, String address, List<Shift> availability, Boolean deleted) {
         this.id = id;
         this.business = business;
         this.name = name;
@@ -24,6 +26,7 @@ public class Employee {
         this.phone = phone;
         this.address = address;
         this.deleted = deleted;
+        this.availability = availability;
     }
 
     public Employee(int business, String name, String email, String phone, String address) {
@@ -33,6 +36,7 @@ public class Employee {
         this.email = email;
         this.phone = phone;
         this.address = address;
+        this.availability = new ArrayList<Shift>();
     }
 
     
@@ -55,6 +59,7 @@ public class Employee {
     public String getAddress() {
         return address;
     }
+    public List<Shift> getAvailability(){return availability;}
     
     public boolean getDeleted() {
     	return deleted;
@@ -84,15 +89,7 @@ public class Employee {
             ResultSet results = stmt.executeQuery();
             //Instantiate and store the employees
             while(results.next()){
-                Employee e = new Employee(
-                        results.getInt("id"),
-                        results.getInt("business"),
-                        results.getString("name"),
-                        results.getString("email"),
-                        results.getString("phone"),
-                        results.getString("address"),
-                        results.getBoolean("deleted")
-                );
+                Employee e = retrieveEmployee(results);
                 if(!e.deleted)
                 	employees.add(e);
             }
@@ -124,15 +121,7 @@ public class Employee {
             ResultSet results = stmt.executeQuery();
             //Instantiate and store the employees
             while(results.next()){
-                Employee e = new Employee(
-                        results.getInt("id"),
-                        results.getInt("business"),
-                        results.getString("name"),
-                        results.getString("email"),
-                        results.getString("phone"),
-                        results.getString("address"),
-                        results.getBoolean("deleted")
-                );
+                Employee e = retrieveEmployee(results);
                 if(!e.deleted)
                 	employees.add(e);
             }
@@ -156,15 +145,7 @@ public class Employee {
             stmt.setInt(1, employeeId);
             ResultSet results = stmt.executeQuery();
             if(results.next()){
-                Employee e =  new Employee(
-                        results.getInt("id"),
-                        results.getInt("business"),
-                        results.getString("name"),
-                        results.getString("email"),
-                        results.getString("phone"),
-                        results.getString("address"),
-                        results.getBoolean("deleted")
-                );
+                Employee e = retrieveEmployee(results);
                 if (!e.getDeleted())
                 	return e;
             }
@@ -192,15 +173,7 @@ public class Employee {
             stmt.setString(1, name);
             ResultSet results = stmt.executeQuery();
             if(results.next()){
-                Employee e = new Employee(
-                        results.getInt("id"),
-                        results.getInt("business"),
-                        results.getString("name"),
-                        results.getString("email"),
-                        results.getString("phone"),
-                        results.getString("address"),
-                        results.getBoolean("deleted")
-                );
+                Employee e = retrieveEmployee(results);
                 if (!e.getDeleted())
                 	return e;
             }
@@ -253,15 +226,7 @@ public class Employee {
             stmt.setInt(2, employeeId);
             ResultSet results = stmt.executeQuery();
             if(results.next()){
-                Employee e = new Employee(
-                        results.getInt("id"),
-                        results.getInt("business"),
-                        results.getString("name"),
-                        results.getString("email"),
-                        results.getString("phone"),
-                        results.getString("address"),
-                        results.getBoolean("deleted")
-                );
+                Employee e = retrieveEmployee(results);
                 if (!e.getDeleted())
                 	return e;
             }
@@ -356,5 +321,82 @@ public class Employee {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+    }
+
+    private static Employee retrieveEmployee(ResultSet results) throws SQLException {
+        List<Shift> availability = retrieveAvailability(results.getInt("id"));
+        return new Employee(
+                results.getInt("id"),
+                results.getInt("business"),
+                results.getString("name"),
+                results.getString("email"),
+                results.getString("phone"),
+                results.getString("address"),
+                availability,
+                results.getBoolean("deleted")
+        );
+    }
+
+    private static List<Shift> retrieveAvailability(int id) {
+        List<Shift> availability = new ArrayList<Shift>();
+        try{
+            Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM availability WHERE empId = ?;");
+            stmt.setInt(1, id);
+            ResultSet results = stmt.executeQuery();
+            while(results.next()){
+                availability.add(new Shift(
+                        results.getInt("id"),
+                        results.getString("name"),
+                        results.getDate("date"),
+                        results.getInt("startHour"),
+                        results.getInt("startMin"),
+                        results.getInt("endHour"),
+                        results.getInt("endMin")
+                ));
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return availability;
+    }
+
+    public boolean setAvailability(List<Shift> availability) {
+        this.availability = availability;
+
+        try{
+                PreparedStatement saveAvailability = Database.getConnection().prepareStatement("" +
+                        "INSERT INTO availability (" +
+                        "empId, " +
+                        "id, " +
+                        "date, " +
+                        "name" +
+                        "startHour, " +
+                        "startMin, " +
+                        "endHour, " +
+                        "endMin )" +
+                        "VALUES (" +
+                        "?, ?, ?, ?, ?, ?, ?)");
+                for(Shift s : availability){
+                    saveAvailability.setInt(1, this.id);
+                    saveAvailability.setInt(2, s.getId());
+                    saveAvailability.setDate(3,s.getDate());
+                    saveAvailability.setString(4,s.getName());
+                    saveAvailability.setInt(5,s.getStartHour());
+                    saveAvailability.setInt(6,s.getStartMin());
+                    saveAvailability.setInt(7,s.getEndHour());
+                    saveAvailability.setInt(7,s.getEndMin());
+                    saveAvailability.executeUpdate();
+                }
+
+                return true;
+
+            }
+
+        catch (Exception ex){
+            logger.severe(ex.getMessage());
+            return false;
+        }
     }
 }
