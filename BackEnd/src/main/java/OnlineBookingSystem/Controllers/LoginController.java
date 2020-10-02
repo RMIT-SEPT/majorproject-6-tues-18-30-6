@@ -103,7 +103,7 @@ public class LoginController {
 
     //Utility function to get the user thats currently logged in.
     static User checkLogin(HttpSession session){
-        Interface obs = Model.getModel();
+        Interface onlineBooking = Model.getModel();
         Role role = (Role)session.getAttribute("role");
         if(role == null){
             return null;
@@ -111,10 +111,10 @@ public class LoginController {
         User user = null;
         if(role == Role.Customer){
             Integer id = (Integer)session.getAttribute("id");
-            user = obs.getCustomerById(id);
+            user = onlineBooking.getCustomerById(id);
         }
         else if(role == Role.BusinessOwner){
-            user = obs.getBusinessOwnerById((Integer)session.getAttribute("id"));
+            user = onlineBooking.getBusinessOwnerById((Integer)session.getAttribute("id"));
         }
         return user;
     }

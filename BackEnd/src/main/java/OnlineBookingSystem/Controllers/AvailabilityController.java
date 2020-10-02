@@ -99,7 +99,7 @@ public class AvailabilityController {
      */
     static boolean checkIsAvailable(int employeeId, LocalDate date, LocalTime startTime, int duration){
 
-        Interface obs = Model.getModel();
+        Interface onlineBooking = Model.getModel();
         LocalDate lowerBound = LocalDate.now();
         if(date.isBefore(lowerBound)){
             return false;
@@ -114,8 +114,8 @@ public class AvailabilityController {
             return false;
         }
 
-        ArrayList<Booking> otherBookings = obs.getBookingsForEmployee(employeeId);
-        ArrayList<Work> rosteredShifts = obs.getAllWorkForEmployee(employeeId);
+        ArrayList<Booking> otherBookings = onlineBooking.getBookingsForEmployee(employeeId);
+        ArrayList<Work> rosteredShifts = onlineBooking.getAllWorkForEmployee(employeeId);
         boolean valid = false;
 
         //Find out which weekday the booking is on.

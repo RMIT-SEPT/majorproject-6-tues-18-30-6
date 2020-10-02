@@ -26,7 +26,7 @@ public class RegisterController {
     @RequestMapping(path="/customer", method= RequestMethod.GET)
     public ModelAndView registerForm() {
         ModelAndView mav = new ModelAndView("customerregistration");
-        mav.addObject("title", "OBS | Customer Registration");
+        mav.addObject("title", "onlineBooking | Customer Registration");
         return mav;
     }
 

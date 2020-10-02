@@ -31,8 +31,8 @@ public class Booking {
             this.businessService = BusinessService.getService(this.employee.getBusiness(), service);
             this.startTime = startTime;
         }
-        catch(SystemException obs){
-            logger.severe(obs.getMessage());
+        catch(SystemException onlineBooking){
+            logger.severe(onlineBooking.getMessage());
         }
     }
 
@@ -47,8 +47,8 @@ public class Booking {
             this.businessService = BusinessService.getService(this.employee.getBusiness(), service);
             this.startTime = startTime;
         }
-        catch(SystemException obs){
-            logger.severe(obs.getMessage());
+        catch(SystemException onlineBooking){
+            logger.severe(onlineBooking.getMessage());
         }
     }
 

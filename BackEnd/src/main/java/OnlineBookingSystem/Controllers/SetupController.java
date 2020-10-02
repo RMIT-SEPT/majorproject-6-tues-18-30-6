@@ -159,7 +159,6 @@ public class SetupController {
                     "}", businessColor);
             pr.close();
 
-            //Check the OBS Directory exists
             File logo = new File(userHome + "/logo.png");
             if(!businessLogo.getContentType().equals("image/png")){
                 ModelAndView mav = new ModelAndView("setup_account");
@@ -261,7 +260,6 @@ public class SetupController {
                     "}", businessColor);
             pr.close();
 
-            //Check the OBS Directory exists
             File logo = new File(userHome + "/logo.png");
             if(!businessLogo.getContentType().equals("image/png")){
                 ModelAndView mav = new ModelAndView("setup_account");
