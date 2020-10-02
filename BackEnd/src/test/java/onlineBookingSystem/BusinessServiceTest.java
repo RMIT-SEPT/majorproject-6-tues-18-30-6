@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BusinessServiceTest {
 
     @BeforeAll
-    public void initialise(){
+    public static void initialise(){
         Database.initTest();
     }
 
@@ -89,10 +89,10 @@ class BusinessServiceTest {
     void getServiceById_ValidID() {
         //Insert a service into the database
         BusinessService expectedService = new BusinessService(0, "testService", 10, 30);
-        insertService(expectedService);
+        int id = insertService(expectedService);
 
         //Attempt to get the service
-        BusinessService receivedService = BusinessService.getServiceById(expectedService.getId());
+        BusinessService receivedService = BusinessService.getServiceById(id);
 
         //Make sure the services are the same
         assert (expectedService.getId() == receivedService.getId());
@@ -118,7 +118,8 @@ class BusinessServiceTest {
         return size;
     }
 
-    private void insertService(BusinessService service) {
+    private int insertService(BusinessService service) {
+        int id = -1;
         try {
 
             PreparedStatement statement = Database.getConnection().prepareStatement("" +
@@ -132,9 +133,12 @@ class BusinessServiceTest {
             statement.setInt(4, service.getDuration());
             statement.executeUpdate();
 
+            PreparedStatement getID;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return id;
     }
 
     private boolean idInDatabase(int id) {

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ public class Shift {
                 Shift s = new Shift(
                         results.getInt("id"),
                         results.getString("name"),
+                        results.getDate("date"),
                         results.getInt("startHour"),
                         results.getInt("startMin"),
                         results.getInt("endHour"),
@@ -68,6 +70,7 @@ public class Shift {
                 return new Shift(
                         results.getInt("id"),
                         results.getString("name"),
+                        results.getDate("date"),
                         results.getInt("startHour"),
                         results.getInt("startMin"),
                         results.getInt("endHour"),
@@ -99,12 +102,14 @@ public class Shift {
     public Shift (
             int id,
             String name,
+            Date date,
             int startHour,
             int startMin,
             int endHour,
             int endMin) {
         this.id = id;
         this.name = name;
+        this.date = date;
         this.startHour = startHour;
         this.startMin = startMin;
         this.endHour = endHour;
@@ -113,6 +118,7 @@ public class Shift {
 
     private int id;
     private String name;
+    private Date date;
     private int startHour;
     private int startMin;
     private int endHour;
@@ -124,6 +130,10 @@ public class Shift {
 
     public String getName() {
         return name;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public int getStartHour() {
@@ -146,7 +156,8 @@ public class Shift {
      * @return returns a formatted string of the shift's start and end time.
      */
     public String getTimes(){
-        return String.format("%d:%02d - %d:%02d", startHour, startMin, endHour, endMin);
+        String formattedDate = date.getDate() + "/" + date.getMonth() + "/" + date.getYear();
+        return String.format("%s %d:%02d - %d:%02d", formattedDate, startHour, startMin, endHour, endMin);
     }
 
 
