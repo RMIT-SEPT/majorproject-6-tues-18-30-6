@@ -28,7 +28,6 @@ label{
 }
 
 ._2iA8p44d0WZ-WqRBGcAuEV   {
-
   border: 1px solid #cccccc;
     border-radius: 4px;
     padding: 5px;
@@ -44,4 +43,25 @@ max-width: 460px;
 max-width: 460px;
 }
 
+#Bookings {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+#Bookings td, #Bookings th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#Bookings tr:nth-child(even){background-color: #f2f2f2;}
+
+#Bookings tr:hover {background-color: #ddd;}
+
+#Bookings th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}

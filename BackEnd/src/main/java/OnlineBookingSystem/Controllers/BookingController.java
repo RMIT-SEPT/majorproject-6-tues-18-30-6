@@ -2,6 +2,8 @@ package OnlineBookingSystem.Controllers;
 
 import OnlineBookingSystem.ModelClasses.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -271,6 +274,16 @@ public class BookingController {
         return mav;
     }
 
+    @RequestMapping("/getAdminBookings")
+    public ResponseEntity<?> retrieveBusinessBookings(int businessID){
+        List<Booking> bookings = Booking.getBookings(businessID);
+        logger.finest("Request recieved for bookings of business with id: "+businessID);
+        if(bookings.size() > 0){
+            return new ResponseEntity<List<Booking>>(bookings, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("Could not retrieve bookings for this business", HttpStatus.BAD_REQUEST);
+    }
+
     /**
      * Method to validate if a booking is ok
      * @param booking booking to validate
@@ -284,4 +297,6 @@ public class BookingController {
 
         return AvailabilityController.checkIsAvailable(employeeId, date, time, duration);
     }
+
+
 }
