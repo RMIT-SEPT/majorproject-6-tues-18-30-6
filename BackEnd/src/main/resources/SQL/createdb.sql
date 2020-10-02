@@ -90,6 +90,19 @@ CREATE TABLE IF NOT EXISTS specialisation (
     FOREIGN KEY(service) REFERENCES service(id)
 );
 
+CREATE TABLE IF NOT EXISTS availability (
+  empId INTEGER,
+  id INTEGER,
+  name TEXT NOT NULL,
+  date DATE NOT NULL,
+  startHour INTEGER NOT NULL,
+  startMin INTEGER NOT NULL,
+  endHour INTEGER NOT NULL,
+  endMin INTEGER NOT NULL,
+  PRIMARY KEY(empId, id),
+  FOREIGN KEY(empId) REFERENCES employee(id)
+);
+
 CREATE TABLE IF NOT EXISTS setup (
     area TEXT PRIMARY KEY,
     value INTEGER DEFAULT 0
