@@ -275,7 +275,7 @@ public class BookingController {
     }
 
     @RequestMapping("/getAdminBookings")
-    public ResponseEntity<?> retrieveBusinessBookings(int businessID){
+    public ResponseEntity<?> retrieveBusinessBookings(@RequestParam(value = "business") Integer businessID){
         List<Booking> bookings = Booking.getBookings(businessID);
         logger.finest("Request recieved for bookings of business with id: "+businessID);
         if(bookings.size() > 0){

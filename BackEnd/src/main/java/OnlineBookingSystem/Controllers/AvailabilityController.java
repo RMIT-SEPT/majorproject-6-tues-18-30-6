@@ -43,9 +43,8 @@ public class AvailabilityController {
 
 
     @RequestMapping(path = "/setAvailability", method = RequestMethod.POST)
-    public ResponseEntity<?> setAvailability(int employeeId){
+    public ResponseEntity<?> setAvailability(@RequestParam(value = "employee") Integer employeeId, @RequestParam(value = "availability") List<Shift> availability){
         Employee e = Employee.getEmployee(employeeId);
-        List<Shift> availability = new ArrayList<Shift>();
         if(e != null && e.setAvailability(availability)){
             return new ResponseEntity<String>("Availability Updated", HttpStatus.OK);
         } else {
