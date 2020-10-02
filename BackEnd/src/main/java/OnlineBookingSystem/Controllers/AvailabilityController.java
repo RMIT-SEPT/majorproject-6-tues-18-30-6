@@ -7,6 +7,8 @@ import OnlineBookingSystem.DisplayClasses.TableRow;
 import OnlineBookingSystem.ModelClasses.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -37,6 +40,19 @@ public class AvailabilityController {
         this.session = session;
         this.onlineBookingSystem = Model.getModel();
     }
+
+
+    @RequestMapping(path = "/setAvailability", method = RequestMethod.POST)
+    public ResponseEntity<?> setAvailability(int employeeId){
+        Employee e = Employee.getEmployee(employeeId);
+        List<Shift> availability = new ArrayList<Shift>();
+        if(e != null && e.setAvailability(availability)){
+            return new ResponseEntity<String>("Availability Updated", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Error: Availability could not be set", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     /**
      * Method to handle /booking/availabilities
@@ -90,7 +106,7 @@ public class AvailabilityController {
     }
 
     /**
-     * method to return if an employee is free for a perticular date, time and duration.
+     * method to return if an employee is free for a particular date, time and duration.
      * @param employeeId the employee to check
      * @param date the date to check
      * @param startTime the start time to check
@@ -109,7 +125,7 @@ public class AvailabilityController {
         LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
         LocalDateTime endDateTime = LocalDateTime.of(date, endTime);
 
-        // The start time should be later than now, otherwise it's not even a booking anymore.
+        // The start time should be later than now, otherwise it's not a valid booking.
         if(!startDateTime.isAfter(LocalDateTime.now())) {
             return false;
         }
@@ -142,7 +158,7 @@ public class AvailabilityController {
                 continue;
             }
 
-            //Falling through here means the booking must of started within this shift.
+            //Falling through here means the booking must have started within this shift.
             //If the booking also ends not after the end of this shift (i.e. before or at the end of shift),
             //then from a shift perspective this booking is valid.
             //There is no need to continue checking further shifts.
