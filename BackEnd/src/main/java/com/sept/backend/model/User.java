@@ -11,7 +11,7 @@ public class User {
     private long id;
     private String username;
     @OneToMany
-    private List<UserType> roles;
+    private List<Role> roles;
     private String email;
 
     private Date created_At;
@@ -37,7 +37,7 @@ public class User {
         this.username = username;
     }
 
-    public void setRoles(List<UserType> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
@@ -49,15 +49,15 @@ public class User {
         this.email = email;
     }
 
-    public List<UserType> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void addRole(UserType type) {
+    public void addRole(Role type) {
         this.roles.add(type);
     }
 
-    public void removeRole(UserType type) {
+    public void removeRole(Role type) {
         this.roles.remove(type);
     }
 

@@ -62,7 +62,6 @@ handleLogin(e) {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password, this.state.userType).then(
-
         () => {
           switch (this.state.userType) {
             case 'customer':

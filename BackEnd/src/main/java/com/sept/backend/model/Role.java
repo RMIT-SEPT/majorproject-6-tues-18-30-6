@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public enum UserType {
-    customer,
-    admin,
-    worker;
+public enum Role {
+    CUSTOMER,
+    ADMIN,
+    WORKER;
 
     private String id;
 
