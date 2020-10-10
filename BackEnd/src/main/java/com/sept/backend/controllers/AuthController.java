@@ -1,10 +1,12 @@
 package com.sept.backend.controllers;
 
 
+import com.sept.backend.model.Business;
 import com.sept.backend.model.User;
 import com.sept.backend.model.Role;
 import com.sept.backend.payload.JWTLoginSuccessResponse;
 import com.sept.backend.payload.LoginRequest;
+import com.sept.backend.services.BusinessService;
 import com.sept.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BusinessService businessService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest login){
         String token = "12345678901234567890";
@@ -36,10 +41,17 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody User user){
+    @PostMapping("/registerUser")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user){
         User newUser = userService.saveOrUpdateUser(user);
 
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/registerBusiness")
+    public ResponseEntity<?> registerBusiness(@Valid @RequestBody Business business){
+        Business newBusiness = businessService.saveOrUpdateBusiness(business);
+
+        return new ResponseEntity<Business>(newBusiness, HttpStatus.CREATED);
     }
 }

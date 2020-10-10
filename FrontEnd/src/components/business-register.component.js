@@ -15,20 +15,18 @@ export default class BusinessRegistration extends React.Component {
   }
 
   submitHandler = (event) => {
+    event.preventDefault();
     let abn = this.state.abn;
     let businessName = this.state.businessName;
     let category = this.state.category;
     if (!Number(abn) || abn.length!==11){
       alert("Your ABN must be a number and be 11 digits long");
-      event.preventDefault();
     }
     if (businessName===''){
       alert("Business name can't be empty")
-      event.preventDefault();
     }
     if (category==null){
       alert("Business category must be selected")
-      event.preventDefault();
     }  
 
     AuthService.registerBusiness(
@@ -67,6 +65,7 @@ export default class BusinessRegistration extends React.Component {
 
   render() {
     return (
+      <div>
       <form method="get" onSubmit={this.submitHandler}>
       <h1>Business Registration Page </h1>
       <p>Enter your Business Name:</p>
@@ -86,16 +85,24 @@ export default class BusinessRegistration extends React.Component {
       <p>Select your type of business category:</p>
       <select name="category" onChange={this.myChangeHandler}>
       <option value="" name="category">Select Category</option>
-    <option value="Lodging" name="category">Lodging</option>
-    <option value="Food and Drink" name="category">Food and Drink</option>
-    <option value="Event Planning" name="category">Event Planning</option>
-    <option value="Personal Care" name="category">Personal Care</option>
+    <option value="LODGING" name="category">Lodging</option>
+    <option value="FOODANDDRINK" name="category">Food and Drink</option>
+    <option value="EVENTPLANNING" name="category">Event Planning</option>
+    <option value="PERSONALCARE" name="category">Personal Care</option>
     
   </select>
       <br/>
       <br/>
       <input type='submit' />
       </form>
+      {this.state.message && (
+        <div className="form-group">
+          <div className="alert alert-danger" role="alert">
+            {this.state.message}
+          </div>
+        </div>
+      )}
+    </div>
     );
   }
 }

@@ -26,7 +26,7 @@ class AuthService {
   }
 
   registerUser(username, email, password, roles) {
-    return axios.post(API_URL + "register", {
+    return axios.post(API_URL + "registerUser", {
       username,
       email,
       password,
@@ -34,10 +34,10 @@ class AuthService {
     });
   }
 
-  registerBusiness(businessName, ABN, category) {
-    return axios.post(API_URL + "businessSignup", {
-      businessName,
-      ABN,
+  registerBusiness(name, abn, category) {
+    return axios.post(API_URL + "registerBusiness", {
+      name,
+      abn,
       category
     });
   }
