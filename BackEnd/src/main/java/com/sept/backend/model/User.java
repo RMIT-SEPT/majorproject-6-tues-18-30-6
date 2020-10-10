@@ -10,7 +10,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
-    @OneToMany
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Role.class)
     private List<Role> roles;
     private String email;
 

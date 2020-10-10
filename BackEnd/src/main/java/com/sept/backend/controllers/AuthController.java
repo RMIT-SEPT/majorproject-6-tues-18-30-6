@@ -9,6 +9,7 @@ import com.sept.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,25 +25,21 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest login){
         String token = "12345678901234567890";
-        User user = new User();
-        user.setId(1);
-        user.setEmail("test@gmail.com");
-        List<Role> roles= new ArrayList<Role>();
-        roles.add(Role.CUSTOMER);
-        roles.add(Role.WORKER);
-        roles.add(Role.ADMIN);
-        user.setRoles(roles);
-        user.setUsername("Sami");
-        return new ResponseEntity<JWTLoginSuccessResponse>(new JWTLoginSuccessResponse(true, token, user), HttpStatus.OK);
+        User user = userService.getByUsername(login.getUsername());
+        if(user != null) {
+            return new ResponseEntity<JWTLoginSuccessResponse>(new JWTLoginSuccessResponse(true, token, user), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Error: User not found.", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user){
+        User newUser = userService.saveOrUpdateUser(user);
 
-
-        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+        return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 }
