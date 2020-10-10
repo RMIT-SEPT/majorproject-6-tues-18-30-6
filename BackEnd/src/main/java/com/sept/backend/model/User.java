@@ -2,6 +2,7 @@ package com.sept.backend.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User {
@@ -9,7 +10,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
-    private UserType type;
+    @OneToMany
+    private List<UserType> roles;
+    private String email;
 
     private Date created_At;
     private Date updated_At;
@@ -34,12 +37,28 @@ public class User {
         this.username = username;
     }
 
-    public UserType getType() {
-        return type;
+    public void setRoles(List<UserType> roles) {
+        this.roles = roles;
     }
 
-    public void setType(UserType type) {
-        this.type = type;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<UserType> getRoles() {
+        return roles;
+    }
+
+    public void addRole(UserType type) {
+        this.roles.add(type);
+    }
+
+    public void removeRole(UserType type) {
+        this.roles.remove(type);
     }
 
     public Date getCreated_At() {
