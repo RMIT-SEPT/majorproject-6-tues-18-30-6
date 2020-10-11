@@ -14,6 +14,8 @@ public class Business {
     @Enumerated(EnumType.STRING)
     private Category category;
     @OneToMany
+    private List<Shift> employeeAvailability;
+    @OneToMany
     private List<Shift> availableBookings;
     @OneToMany
     private List<Booking> bookings;
@@ -46,6 +48,18 @@ public class Business {
             availableBookings.add(newShift);
         }
         return true;
+    }
+
+    public List<Shift> getEmployeeAvailability() {
+        return employeeAvailability;
+    }
+
+    public void setEmployeeAvailability(List<Shift> employeeAvailability) {
+        this.employeeAvailability = employeeAvailability;
+    }
+
+    public void addEmployeeAvailability(List<Shift> employeeAvailability) {
+        this.employeeAvailability.addAll(employeeAvailability);
     }
 
     public List<Booking> getBookings() {
