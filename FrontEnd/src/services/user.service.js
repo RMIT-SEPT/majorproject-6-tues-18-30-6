@@ -27,7 +27,7 @@ class UserService {
   }
 
   getBookingHistory(user){
-    return axios.get(API_URL + 'booking/bookingHistory', { headers: authHeader()}, {params: {user: user.username}})
+    return axios.get(API_URL + 'bookings/history', { headers: authHeader()}, {params: {user: user.username}})
   }
 }
 

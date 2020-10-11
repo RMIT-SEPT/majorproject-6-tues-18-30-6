@@ -88,9 +88,9 @@ public class BookingController {
     }
 
     @RequestMapping("/history")
-    public ResponseEntity<?> getUserHistory(@Valid @RequestBody Long custId){
-        if(userService.getById(custId).isPresent()){
-            List<Booking> bookings = bookingService.getBookingHistory(userService.getById(custId).get());
+    public ResponseEntity<?> getUserHistory(@Valid @RequestBody String username){
+        if(userService.getByUsername(username) != null){
+            List<Booking> bookings = bookingService.getBookingHistory(userService.getByUsername(username));
             return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
         return new ResponseEntity<>("Error: Could not find user", HttpStatus.BAD_REQUEST);
