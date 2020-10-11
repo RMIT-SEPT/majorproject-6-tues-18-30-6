@@ -1,6 +1,7 @@
 package com.sept.backend.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Business {
@@ -12,9 +13,59 @@ public class Business {
     private String Abn;
     @Enumerated(EnumType.STRING)
     private Category category;
+    @OneToMany
+    private List<Shift> availableBookings;
+    @OneToMany
+    private List<Booking> bookings;
+
+    public boolean Book(Booking booking){
+        Shift bookingShift = null;
+        for(Shift s : availableBookings){
+            if (booking.getTime().isWithin(s) && booking.getWorker().equals(s.getWorker())){
+                bookingShift = s;
+                break;
+            }
+        }
+
+        if(bookingShift == null){
+            return false;
+        }
+
+        //Checks whether the booking is at the start or end of the available shift (in which case the shift can simply be shortened)
+        if(bookingShift.getStartTime().compareTo(booking.getTime().getStartTime()) == 0){
+            bookingShift.setStartTime(booking.getTime().getEndTime());
+        } else if(bookingShift.getEndTime().compareTo(booking.getTime().getEndTime()) == 0){
+            bookingShift.setEndTime(booking.getTime().getStartTime());
+        } else{
+            //Otherwise we split the booking
+            Shift newShift = new Shift();
+            newShift.setEndTime(bookingShift.getEndTime());
+            newShift.setWorker(bookingShift.getWorker());
+            newShift.setStartTime(booking.getTime().getEndTime());
+            bookingShift.setEndTime(booking.getTime().getStartTime());
+            availableBookings.add(newShift);
+        }
+        return true;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Shift> getAvailableBookings() {
+        return availableBookings;
+    }
+
+    public void setAvailableBookings(List<Shift> availableBookings) {
+        this.availableBookings = availableBookings;
     }
 
     public String getName() {

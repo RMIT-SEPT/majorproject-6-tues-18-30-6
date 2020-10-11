@@ -3,6 +3,7 @@ package com.sept.backend.model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class User {
@@ -76,6 +77,23 @@ public class User {
 
     public void setUpdated_At(Date updated_At) {
         this.updated_At = updated_At;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof User){
+            return this.equals((User)obj);
+        }
+        return false;
+    }
+
+    public boolean equals(User user) {
+        return user.getId() == this.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @PrePersist
