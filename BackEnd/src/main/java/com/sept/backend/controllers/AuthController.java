@@ -35,36 +35,36 @@ public class AuthController {
         String token = "12345678901234567890";
         User user = userService.getByUsername(login.getUsername());
         if(user != null) {
-            return new ResponseEntity<JWTLoginSuccessResponse>(new JWTLoginSuccessResponse(true, token, user), HttpStatus.OK);
+            return new ResponseEntity<>(new JWTLoginSuccessResponse(true, token, user), HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Error: User not found.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error: User not found.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user){
         if(userService.getByUsername(user.getUsername()) != null){
-            return new ResponseEntity<String>("Error: User already exists", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error: User already exists", HttpStatus.BAD_REQUEST);
         }
         User newUser = userService.saveOrUpdateUser(user);
 
-        return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/updateUser")
     public ResponseEntity<?> updateUser(@Valid @RequestBody User user){
         if(userService.getByUsername(user.getUsername()) == null){
-            return new ResponseEntity<String>("Error: User does not exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error: User does not exist", HttpStatus.BAD_REQUEST);
         }
         User newUser = userService.saveOrUpdateUser(user);
 
-        return new ResponseEntity<User>(newUser, HttpStatus.OK);
+        return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
     @PostMapping("/registerBusiness")
     public ResponseEntity<?> registerBusiness(@Valid @RequestBody Business business){
         Business newBusiness = businessService.saveOrUpdateBusiness(business);
 
-        return new ResponseEntity<Business>(newBusiness, HttpStatus.CREATED);
+        return new ResponseEntity<>(newBusiness, HttpStatus.CREATED);
     }
 }
