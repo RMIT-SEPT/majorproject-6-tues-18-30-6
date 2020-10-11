@@ -43,9 +43,22 @@ public class AuthController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user){
+        if(userService.getByUsername(user.getUsername()) != null){
+            return new ResponseEntity<String>("Error: User already exists", HttpStatus.BAD_REQUEST);
+        }
         User newUser = userService.saveOrUpdateUser(user);
 
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/updateUser")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user){
+        if(userService.getByUsername(user.getUsername()) == null){
+            return new ResponseEntity<String>("Error: User does not exist", HttpStatus.BAD_REQUEST);
+        }
+        User newUser = userService.saveOrUpdateUser(user);
+
+        return new ResponseEntity<User>(newUser, HttpStatus.OK);
     }
 
     @PostMapping("/registerBusiness")

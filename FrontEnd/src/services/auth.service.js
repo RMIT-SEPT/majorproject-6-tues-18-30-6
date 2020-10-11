@@ -43,7 +43,7 @@ class AuthService {
   }
 
   editDetails(username, email, password, address, phone){
-    return axios.post(API_URL + "editDetails", {
+    return axios.post(API_URL + "updateUser", {
       username,
       email,
       password,
