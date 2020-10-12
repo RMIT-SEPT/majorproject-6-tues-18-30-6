@@ -2,14 +2,30 @@ import React from 'react';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 
+
+
 export default class BookingHistory extends React.Component {
   constructor(props) {
     super(props);
+    this.formatTime = this.formatTime.bind(this);
 
     this.state = {
       bookingHistory: [],
       content: ""
     };
+  }
+
+  formatTime(start, end){
+    let time = "";
+    start = new Date(start);
+    end = new Date(end);
+    let startTime = start.toTimeString();
+    let endTime = end.toTimeString();
+
+    time = start.toDateString() + ": " + startTime.slice(0,5) + "-" + endTime.slice(0,5);
+    
+
+    return time;
   }
 
   componentDidMount() {
@@ -45,7 +61,9 @@ export default class BookingHistory extends React.Component {
         {
           display ? (
             this.state.bookingHistory.map((booking) => (
-              <li key={booking.id}>Date: {booking.date}, Business: {booking.business}, Worker: {booking.worker}</li>
+              <div class = "container">
+              <li key={booking.id}>Date: {this.formatTime(booking.time.startTime, booking.time.endTime)}, Worker: {booking.time.worker.username}</li>
+              </div>
             ))) : ("No Bookings Found")
         }
       </div>

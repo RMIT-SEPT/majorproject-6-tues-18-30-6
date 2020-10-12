@@ -8,12 +8,10 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Shift time;
-    @OneToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private User customer;
-    @OneToOne
-    private User worker;
 
     public long getId() {
         return id;
@@ -37,13 +35,5 @@ public class Booking {
 
     public void setCustomer(User customer) {
         this.customer = customer;
-    }
-
-    public User getWorker() {
-        return worker;
-    }
-
-    public void setWorker(User worker) {
-        this.worker = worker;
     }
 }

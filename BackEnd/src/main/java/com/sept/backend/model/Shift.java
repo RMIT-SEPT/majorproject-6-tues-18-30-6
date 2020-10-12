@@ -1,8 +1,6 @@
 package com.sept.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -16,6 +14,7 @@ public class Shift {
     private Date startTime;
     private Date endTime;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     public boolean isWithin(Shift shift){

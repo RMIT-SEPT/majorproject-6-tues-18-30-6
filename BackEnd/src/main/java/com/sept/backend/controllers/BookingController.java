@@ -5,6 +5,7 @@ import com.sept.backend.model.Booking;
 import com.sept.backend.model.Business;
 import com.sept.backend.model.Shift;
 import com.sept.backend.model.User;
+import com.sept.backend.payload.BookingRequest;
 import com.sept.backend.services.BookingService;
 import com.sept.backend.services.BusinessService;
 import com.sept.backend.services.UserService;
@@ -98,20 +99,20 @@ public class BookingController {
     }
 
     @RequestMapping("/current")
-    public ResponseEntity<?> getCurrentBookings(@Valid @RequestBody Long custId){
-        if(userService.getById(custId).isPresent()){
-            List<Booking> bookings = bookingService.getBookingsByUser(userService.getById(custId).get());
+    public ResponseEntity<?> getCurrentBookings(@Valid @RequestBody User user){
+        if(userService.getByUsername(user.getUsername())!=null){
+            List<Booking> bookings = bookingService.getBookingsByUser(userService.getByUsername(user.getUsername()));
             return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
         return new ResponseEntity<>("Error: Could not find user", HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping("/book")
-    public ResponseEntity<?> book(@Valid @RequestBody Long businessId, @Valid @RequestBody Booking booking){
-        Optional<Business> business = businessService.getBusinessById(businessId);
+    public ResponseEntity<?> book(@Valid @RequestBody BookingRequest request){
+        Optional<Business> business = businessService.getBusinessById(request.getBusinessId());
         if(business.isPresent()){
-            business.get().Book(booking);
-            if(bookingService.saveBooking(booking) != null) {
+            if(bookingService.saveBooking(request.getBooking()) != null) {
+                business.get().Book(request.getBooking());
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
             return new ResponseEntity<>("Error: Could not create booking",HttpStatus.BAD_REQUEST);

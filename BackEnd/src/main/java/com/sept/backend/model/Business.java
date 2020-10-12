@@ -8,7 +8,7 @@ public class Business {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     private String name;
     private String Abn;
     @Enumerated(EnumType.STRING)
@@ -23,7 +23,7 @@ public class Business {
     public boolean Book(Booking booking){
         Shift bookingShift = null;
         for(Shift s : availableBookings){
-            if (booking.getTime().isWithin(s) && booking.getWorker().equals(s.getWorker())){
+            if (booking.getTime().isWithin(s) && booking.getTime().getWorker().equals(s.getWorker())){
                 bookingShift = s;
                 break;
             }
@@ -70,7 +70,7 @@ public class Business {
         this.bookings = bookings;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -106,7 +106,7 @@ public class Business {
         this.category = category;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 }
