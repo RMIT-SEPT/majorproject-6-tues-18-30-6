@@ -4,6 +4,7 @@ package com.sept.backend.controllers;
 import com.sept.backend.model.Booking;
 import com.sept.backend.model.Business;
 import com.sept.backend.model.Shift;
+import com.sept.backend.model.User;
 import com.sept.backend.services.BookingService;
 import com.sept.backend.services.BusinessService;
 import com.sept.backend.services.UserService;
@@ -88,9 +89,9 @@ public class BookingController {
     }
 
     @RequestMapping("/history")
-    public ResponseEntity<?> getUserHistory(@Valid @RequestBody String username){
-        if(userService.getByUsername(username) != null){
-            List<Booking> bookings = bookingService.getBookingHistory(userService.getByUsername(username));
+    public ResponseEntity<?> getUserHistory(@Valid @RequestBody User user){
+        if(userService.getByUsername(user.getUsername()) != null){
+            List<Booking> bookings = bookingService.getBookingHistory(userService.getByUsername(user.getUsername()));
             return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
         return new ResponseEntity<>("Error: Could not find user", HttpStatus.BAD_REQUEST);

@@ -28,16 +28,19 @@ const email = value => {
 };
 
 const vusername = value => {
-  if (value.length < 3 || value.length > 20) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
-      </div>
-    );
+  if(value != null){
+    if (value.length < 3 || value.length > 20) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          The username must be between 3 and 20 characters.
+        </div>
+      );
+    }
   }
 };
 
 const vpassword = value => {
+  if(value != null){
   if ((value.length > 0) && (value.length < 6 || value.length > 40)) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -45,9 +48,11 @@ const vpassword = value => {
       </div>
     );
   }
+}
 };
 
 const vphone = value => {
+  if(value != null){
   if (value.length !== 10) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -55,6 +60,7 @@ const vphone = value => {
       </div>
     );
   }
+}
 }
 
 export default class EditDetails extends Component {
@@ -68,6 +74,7 @@ export default class EditDetails extends Component {
     this.onChangePhone = this.onChangePhone.bind(this);
 
     this.state ={
+      id: 0,
       username: "",
       email: "",
       password: "",
@@ -80,6 +87,7 @@ export default class EditDetails extends Component {
     UserService.getDetails(AuthService.getCurrentUser()).then(
       response => {
         this.setState({
+          id: response.data.id,
           username: response.data.username,
           email: response.data.email,
           password: "",
@@ -145,6 +153,7 @@ export default class EditDetails extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.editDetails(
+        this.state.id,
         this.state.username,
         this.state.email,
         this.state.password,
@@ -228,7 +237,6 @@ export default class EditDetails extends Component {
                     name="address"
                     value={this.state.address}
                     onChange={this.onChangeAddress}
-                    validations={[required]}
                   />
                 </div>
 
@@ -240,7 +248,7 @@ export default class EditDetails extends Component {
                     name="phone"
                     value={this.state.phoneNumber}
                     onChange={this.onChangePhone}
-                    validations={[vphone, required]}
+                    validations={[vphone]}
                   />
                 </div>
 

@@ -42,8 +42,9 @@ class AuthService {
     });
   }
 
-  editDetails(username, email, password, address, phone){
+  editDetails(id, username, email, password, address, phone){
     return axios.post(API_URL + "updateUser", {
+      id,
       username,
       email,
       password,

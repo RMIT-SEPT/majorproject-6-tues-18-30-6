@@ -15,6 +15,8 @@ public class User {
     @ElementCollection(targetClass = Role.class)
     private List<Role> roles;
     private String email;
+    private String address;
+    private String phoneNumber;
 
     private Date created_At;
     private Date updated_At;
@@ -49,6 +51,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public List<Role> getRoles() {

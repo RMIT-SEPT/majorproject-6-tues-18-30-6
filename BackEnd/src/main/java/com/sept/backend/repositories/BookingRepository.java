@@ -10,10 +10,8 @@ import java.util.Date;
 @Repository
 public interface BookingRepository extends CrudRepository<Booking, Long> {
 
-    public boolean deleteBookingById(Long id);
+    public boolean deleteBookingById(Long Id);
 
-    public Iterable<Booking> getBookingByCustomerAndTimeAfter(User user, Date date);
-
-    public Iterable<Booking> getBookingByCustomerAndTimeBefore(User user, Date date);
+    public Iterable<Booking> getBookingsByCustomer(User user);
 
 }

@@ -15,8 +15,9 @@ public class UserService {
 
     public User saveOrUpdateUser(User user){
 
-
-
+        if(userRepository.existsById(user.getId())){
+         userRepository.deleteById(user.getId());
+        }
         return userRepository.save(user);
     }
 
@@ -25,7 +26,6 @@ public class UserService {
     }
 
     public User getByUsername(String username){
-
         return userRepository.findByUsername(username);
     }
 }

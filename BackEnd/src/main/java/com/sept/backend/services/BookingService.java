@@ -34,13 +34,16 @@ public class BookingService {
 
     public List<Booking> getBookingHistory(User user){
         List<Booking> bookings = new ArrayList<Booking>();
-        bookingRepository.getBookingByCustomerAndTimeBefore(user, new Date()).forEach(b -> bookings.add(b));
+        Date now = new Date();
+        bookingRepository.getBookingsByCustomer(user).forEach(b ->{ if(b.getTime().getStartTime().before(now)) bookings.add(b);});
+
         return bookings;
     }
 
     public List<Booking> getBookingsByUser(User user){
         List<Booking> bookings = new ArrayList<Booking>();
-        bookingRepository.getBookingByCustomerAndTimeAfter(user, new Date()).forEach(b -> bookings.add(b));
+        Date now = new Date();
+        bookingRepository.getBookingsByCustomer(user).forEach(b -> { if(b.getTime().getStartTime().after(now)) bookings.add(b);});
         return bookings;
     }
 

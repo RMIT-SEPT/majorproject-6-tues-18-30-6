@@ -15,7 +15,8 @@ class UserService {
   }
 
   getDetails(user){
-    return axios.get(API_URL + 'user/getDetails', {headers: authHeader()}, {params: {user: user.username}});
+    let username = user.username;
+    return axios.post(API_URL + 'auth/getDetails', {username});
   }
 
   getWorkerBoard() {
@@ -27,7 +28,8 @@ class UserService {
   }
 
   getBookingHistory(user){
-    return axios.get(API_URL + 'bookings/history', { headers: authHeader()}, {params: {user: user.username}})
+    let username = user.username;
+    return axios.post(API_URL + 'bookings/history', {username})
   }
 }
 

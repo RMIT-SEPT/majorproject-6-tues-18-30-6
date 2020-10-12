@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import AdminManageTimes from "./AdminManageTimes.component";
 
 export default class BoardAdmin extends Component {
   constructor(props) {
@@ -34,9 +37,21 @@ export default class BoardAdmin extends Component {
   render() {
     return (
       <div className="container">
-        <header className="jumbotron">
-          <h3>{this.state.content}</h3>
-        </header>
+        <Tabs>
+        <TabList>
+          <Tab>Manage Bookings</Tab>
+          <Tab>Manage Available Times</Tab>
+        </TabList>
+    
+        <TabPanel>
+        <div>
+          Functionality not added
+        </div>
+        </TabPanel>
+        <TabPanel>
+          <AdminManageTimes />
+        </TabPanel>
+      </Tabs>
       </div>
     );
   }

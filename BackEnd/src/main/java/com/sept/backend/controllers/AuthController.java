@@ -59,12 +59,12 @@ public class AuthController {
     }
 
     @PostMapping("/getDetails")
-    public ResponseEntity<?> getUserDetails(@Valid @RequestBody String username){
-        User user = userService.getByUsername(username);
-        if(user == null){
+    public ResponseEntity<?> getUserDetails(@Valid @RequestBody User user){
+        User details = userService.getByUsername(user.getUsername());
+        if(details == null){
             return new ResponseEntity<>("Error: User does not exist", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
     @PostMapping("/registerBusiness")

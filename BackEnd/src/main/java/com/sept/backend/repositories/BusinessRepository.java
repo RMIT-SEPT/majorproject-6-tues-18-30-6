@@ -15,6 +15,4 @@ public interface BusinessRepository extends CrudRepository<Business, Long> {
 
     @Override
     Optional<Business> findById(Long aLong);
-
-    Iterable<Booking> getBookings(Long id);
 }
