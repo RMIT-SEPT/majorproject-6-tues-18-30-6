@@ -3,6 +3,7 @@ package com.sept.backend.controllers;
 
 import com.sept.backend.model.Business;
 import com.sept.backend.model.User;
+import com.sept.backend.payload.ErrorResponse;
 import com.sept.backend.payload.JWTLoginSuccessResponse;
 import com.sept.backend.payload.LoginRequest;
 import com.sept.backend.services.BusinessService;
@@ -31,17 +32,17 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest login){
         String token = "12345678901234567890";
         User user = userService.getByUsername(login.getUsername());
-        if(user != null) {
+        if(user != null && user.getPassword().contentEquals(login.getPassword())) {
             return new ResponseEntity<>(new JWTLoginSuccessResponse(true, token, user), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Error: User not found.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error: User not found."), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user){
         if(userService.getByUsername(user.getUsername()) != null){
-            return new ResponseEntity<>("Error: User already exists", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error: User already exists"), HttpStatus.BAD_REQUEST);
         }
         User newUser = userService.saveOrUpdateUser(user);
 
@@ -50,19 +51,20 @@ public class AuthController {
 
     @PostMapping("/updateUser")
     public ResponseEntity<?> updateUser(@Valid @RequestBody User user){
-        if(userService.getByUsername(user.getUsername()) == null){
-            return new ResponseEntity<>("Error: User does not exist", HttpStatus.BAD_REQUEST);
+        String token = "12345678901234567890";
+        if(userService.getById(user.getId()) == null){
+            return new ResponseEntity<>(new ErrorResponse("Error: User does not exist"), HttpStatus.BAD_REQUEST);
         }
         User newUser = userService.saveOrUpdateUser(user);
 
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        return new ResponseEntity<>(new JWTLoginSuccessResponse(true, token, newUser), HttpStatus.OK);
     }
 
     @PostMapping("/getDetails")
     public ResponseEntity<?> getUserDetails(@Valid @RequestBody User user){
         User details = userService.getByUsername(user.getUsername());
         if(details == null){
-            return new ResponseEntity<>("Error: User does not exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error: User does not exist"), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(details, HttpStatus.OK);
     }

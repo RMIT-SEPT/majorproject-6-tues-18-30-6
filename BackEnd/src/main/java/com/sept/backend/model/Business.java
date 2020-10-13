@@ -13,11 +13,11 @@ public class Business {
     private String Abn;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Shift> employeeAvailability;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Shift> availableBookings;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Booking> bookings;
 
     public boolean Book(Booking booking){

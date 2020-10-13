@@ -5,7 +5,9 @@ import com.sept.backend.model.Booking;
 import com.sept.backend.model.Business;
 import com.sept.backend.model.Shift;
 import com.sept.backend.model.User;
+import com.sept.backend.payload.AvailabilityRequest;
 import com.sept.backend.payload.BookingRequest;
+import com.sept.backend.payload.ErrorResponse;
 import com.sept.backend.services.BookingService;
 import com.sept.backend.services.BusinessService;
 import com.sept.backend.services.UserService;
@@ -39,54 +41,54 @@ public class BookingController {
     }
 
     @RequestMapping("/getAvailableBookings")
-    public ResponseEntity<?> getAvailableBookings(@Valid @RequestBody Long businessId){
-        Optional<Business> opt = businessService.getBusinessById(businessId);
+    public ResponseEntity<?> getAvailableBookings(@Valid @RequestBody Business business){
+        Optional<Business> opt = businessService.getBusinessById(business.getId());
         if(opt.isPresent()){
-            Business business= opt.get();
-            return new ResponseEntity<>(business.getAvailableBookings(), HttpStatus.OK);
+            return new ResponseEntity<>(opt.get().getAvailableBookings(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Error: Could not find business", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not find business"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping("/getEmployeeAvailability")
-    public ResponseEntity<?> getEmployeeAvailability(Long businessId){
-        Optional<Business> business = businessService.getBusinessById(businessId);
-        if(business.isPresent()){
-            return new ResponseEntity<>(business.get().getEmployeeAvailability(), HttpStatus.OK);
+    public ResponseEntity<?> getEmployeeAvailability(@Valid @RequestBody Business business){
+        Optional<Business> opt = businessService.getBusinessById(business.getId());
+        if(opt.isPresent()){
+            return new ResponseEntity<>(opt.get().getEmployeeAvailability(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("Error: Could not find business", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not find business"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping("/setAvailableBookings")
-    public ResponseEntity<?> getEmployeeAvailability(Long businessId, List<Shift> availability){
-        Optional<Business> business = businessService.getBusinessById(businessId);
+    public ResponseEntity<?> setAvailableBookings(@Valid @RequestBody AvailabilityRequest request){
+        Optional<Business> business = businessService.getBusinessById(request.getBusinessId());
         if(business.isPresent()){
-            business.get().setAvailableBookings(availability);
+            business.get().setAvailableBookings(request.getAvailability());
+            businessService.saveOrUpdateBusiness(business.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>("Error: Could not find business", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not find business"), HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(path = "/setAvailability")
-    public ResponseEntity<?> setAvailability(Long businessId, List<Shift> availability){
-        Optional<Business> business = businessService.getBusinessById(businessId);
+    public ResponseEntity<?> setAvailability(@Valid @RequestBody AvailabilityRequest request){
+        Optional<Business> business = businessService.getBusinessById(request.getBusinessId());
         if(business.isPresent()){
-            business.get().addEmployeeAvailability(availability);
+            business.get().addEmployeeAvailability(request.getAvailability());
             return new ResponseEntity<>("Availability Updated", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Error: Availability could not be set", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error: Availability could not be set"), HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping("/getAdminBookings")
-    public ResponseEntity<?> retrieveBusinessBookings(Long businessId){
-        Optional<Business> business = businessService.getBusinessById(businessId);
-        if(business.isPresent()){
-            List<Booking> bookings = business.get().getBookings();
+    public ResponseEntity<?> retrieveBusinessBookings(@Valid @RequestBody Business business){
+        Optional<Business> opt = businessService.getBusinessById(business.getId());
+        if(opt.isPresent()){
+            List<Booking> bookings = opt.get().getBookings();
             return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Could not retrieve bookings for this business", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not retrieve bookings for this business"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping("/history")
@@ -95,7 +97,7 @@ public class BookingController {
             List<Booking> bookings = bookingService.getBookingHistory(userService.getByUsername(user.getUsername()));
             return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Error: Could not find user", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not find user"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping("/current")
@@ -104,7 +106,7 @@ public class BookingController {
             List<Booking> bookings = bookingService.getBookingsByUser(userService.getByUsername(user.getUsername()));
             return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Error: Could not find user", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not find user"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping("/book")
@@ -115,9 +117,9 @@ public class BookingController {
                 business.get().Book(request.getBooking());
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
-            return new ResponseEntity<>("Error: Could not create booking",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error: Could not create booking"),HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Error: Could not find business",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not find business"),HttpStatus.BAD_REQUEST);
     }
 
 
@@ -127,6 +129,6 @@ public class BookingController {
         if(bookingService.deleteBooking(booking)){
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>("Error: Could not delete booking", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("Error: Could not delete booking"), HttpStatus.BAD_REQUEST);
     }
 }

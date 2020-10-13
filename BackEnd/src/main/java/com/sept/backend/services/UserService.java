@@ -14,11 +14,19 @@ public class UserService {
     private UserRepository userRepository;
 
     public User saveOrUpdateUser(User user){
+        Optional<User> updated = userRepository.findById(user.getId());
+        if(updated.isPresent()){
+            updated.get().setUsername(user.getUsername());
+            updated.get().setPassword(user.getPassword());
+            updated.get().setPhoneNumber(user.getPhoneNumber());
+            updated.get().setEmail(user.getEmail());
+            updated.get().setAddress(user.getAddress());
+            updated.get().setRoles(user.getRoles());
 
-        if(userRepository.existsById(user.getId())){
-         userRepository.deleteById(user.getId());
+            return userRepository.save(updated.get());
+        } else {
+            return userRepository.save(user);
         }
-        return userRepository.save(user);
     }
 
     public Optional<User> getById(Long id){

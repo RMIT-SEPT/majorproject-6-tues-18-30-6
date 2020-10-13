@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 export default class BoardWorker extends Component {

@@ -33,7 +33,7 @@ public class BookingService {
     }
 
     public List<Booking> getBookingHistory(User user){
-        List<Booking> bookings = new ArrayList<Booking>();
+        List<Booking> bookings = new ArrayList<>();
         Date now = new Date();
         for(Booking b : bookingRepository.getBookingsByCustomer(user)){
             if(b.getTime().getStartTime().before(now)){
@@ -45,7 +45,7 @@ public class BookingService {
     }
 
     public List<Booking> getBookingsByUser(User user){
-        List<Booking> bookings = new ArrayList<Booking>();
+        List<Booking> bookings = new ArrayList<>();
         Date now = new Date();
         for(Booking b : bookingRepository.getBookingsByCustomer(user)){
             if(b.getTime().getStartTime().after(now)){

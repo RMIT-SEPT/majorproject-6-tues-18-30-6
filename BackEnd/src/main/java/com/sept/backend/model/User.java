@@ -17,6 +17,7 @@ public class User {
     private String email;
     private String address;
     private String phoneNumber;
+    private String password;
 
     private Date created_At;
     private Date updated_At;
@@ -95,6 +96,14 @@ public class User {
 
     public void setUpdated_At(Date updated_At) {
         this.updated_At = updated_At;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

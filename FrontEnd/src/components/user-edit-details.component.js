@@ -53,7 +53,7 @@ const vpassword = value => {
 
 const vphone = value => {
   if(value != null){
-  if (value.length !== 10) {
+  if (value.length !== 10 && value.length !== 0) {
     return (
       <div className="alert alert-danger" role="alert">
         Phone number must be exactly 10 characters.
@@ -93,6 +93,7 @@ export default class EditDetails extends Component {
           password: "",
           address: response.data.address,
           phoneNumber: response.data.phoneNumber,
+          roles: response.data.roles,
           successful: false,
           message: ""
         });
@@ -158,13 +159,15 @@ export default class EditDetails extends Component {
         this.state.email,
         this.state.password,
         this.state.address,
-        this.state.phoneNumber
+        this.state.phoneNumber,
+        this.state.roles
       ).then(
         response => {
           this.setState({
             message: response.data.message,
             successful: true
           });
+          localStorage.setItem("user", JSON.stringify(response.data));
         },
         error => {
           const resMessage =
@@ -225,7 +228,7 @@ export default class EditDetails extends Component {
                     name="password"
                     value={this.state.password}
                     onChange={this.onChangePassword}
-                    validations={[vpassword]}
+                    validations={[vpassword, required]}
                   />
                 </div>
 
