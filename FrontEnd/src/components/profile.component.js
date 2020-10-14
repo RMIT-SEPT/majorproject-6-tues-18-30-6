@@ -54,6 +54,14 @@ export default class Profile extends Component {
           {currentUser.roles &&
             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
         </ul>
+        <p>
+          <strong>Address:</strong>{" "}
+          {currentUser.address}
+        </p>
+        <p>
+          <strong>Phone Number:</strong>{" "}
+          {currentUser.phoneNumber}
+        </p>
       </div>: null}
       </div>
     );

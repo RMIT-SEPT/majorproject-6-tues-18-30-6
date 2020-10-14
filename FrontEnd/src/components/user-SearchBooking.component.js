@@ -16,14 +16,19 @@ export default class SearchPage extends React.Component {
   componentDidMount() {
     BookingService.getAvailableBookings(1).then(
       (response) => {
-        console.log(response.data);
+        //Formatting the request to fit with the previously existing search algorithm
         var formattedTimes = [];
         for (let i = 0; i < response.data.length; i++) {
           let date = new Date(response.data[i].startTime);
           formattedTimes.push({
             minute: date.toTimeString().slice(3, 5),
             hour: date.toTimeString().slice(0, 2),
-            date: response.data[i].startTime.slice(0,4) + "/" + response.data[i].startTime.slice(5,7) + "/" + response.data[i].startTime.slice(8,10),
+            date:
+              response.data[i].startTime.slice(0, 4) +
+              "-" +
+              response.data[i].startTime.slice(5, 7) +
+              "-" +
+              response.data[i].startTime.slice(8, 10),
             inputMatch: true,
             advanceMatch: true,
             dateSelectMatch: true,
@@ -69,11 +74,15 @@ export default class SearchPage extends React.Component {
   };
 
   dateSelect = () => {
-    console.log("dateSelect");
     let dateSelector = document.getElementById("dateSelector").value;
     let copy = this.state.times.slice();
+    console.log(dateSelector);
     for (let i = 0; i < copy.length; i++) {
-      copy[i].dateSelectMatch = copy[i].date === dateSelector ? true : false;
+      if (dateSelector === "") {
+        copy[i].dateSelectMatch = true;
+      } else {
+        copy[i].dateSelectMatch = copy[i].date === dateSelector ? true : false;
+      }
     }
     console.log(copy);
     this.setState({

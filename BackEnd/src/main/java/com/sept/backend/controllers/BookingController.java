@@ -75,6 +75,7 @@ public class BookingController {
         Optional<Business> business = businessService.getBusinessById(request.getBusinessId());
         if(business.isPresent()){
             business.get().addEmployeeAvailability(request.getAvailability());
+            businessService.saveOrUpdateBusiness(business.get());
             return new ResponseEntity<>("Availability Updated", HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new ErrorResponse("Error: Availability could not be set"), HttpStatus.BAD_REQUEST);
@@ -115,6 +116,7 @@ public class BookingController {
         if(business.isPresent()){
             if(bookingService.saveBooking(request.getBooking()) != null) {
                 business.get().Book(request.getBooking());
+                businessService.saveOrUpdateBusiness(business.get());
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
             return new ResponseEntity<>(new ErrorResponse("Error: Could not create booking"),HttpStatus.BAD_REQUEST);
