@@ -53,11 +53,13 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeRole = this.onChangeRole.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      role: "CUSTOMER",
       successful: false,
       message: ""
     };
@@ -81,6 +83,12 @@ export default class Register extends Component {
     });
   }
 
+  onChangeRole(e) {
+    this.setState({
+      role: e.target.value
+    });
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -95,11 +103,12 @@ export default class Register extends Component {
       AuthService.registerUser(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        [this.state.role]
       ).then(
         response => {
           this.setState({
-            message: response.data.message,
+            message: "Registration Successful!",
             successful: true
           });
         },
@@ -173,6 +182,23 @@ export default class Register extends Component {
                     validations={[required, vpassword]}
                   />
                 </div>
+
+                 <div className="form-group">
+              <select
+                name = 'userType'
+                className="form-control"
+                value = {this.state.role}
+                onChange={this.onChangeRole}
+              >
+                {this.state.loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <option value="CUSTOMER">Customer</option>
+                <option value="WORKER">Worker</option>
+                <option value="ADMIN">Administrator</option>
+              </select>
+            </div>
+
 
                 <div className="form-group">
                   <button className="btn btn-primary btn-block">Sign Up</button>

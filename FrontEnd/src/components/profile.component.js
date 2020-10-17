@@ -38,8 +38,8 @@ export default class Profile extends Component {
         </header>
         <p>
           <strong>Token:</strong>{" "}
-          {currentUser.accessToken.substring(0, 20)} ...{" "}
-          {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+          {currentUser.token.substring(0, 20)} ...{" "}
+          {currentUser.token.substr(currentUser.token.length - 20)}
         </p>
         <p>
           <strong>Id:</strong>{" "}
@@ -54,6 +54,14 @@ export default class Profile extends Component {
           {currentUser.roles &&
             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
         </ul>
+        <p>
+          <strong>Address:</strong>{" "}
+          {currentUser.address}
+        </p>
+        <p>
+          <strong>Phone Number:</strong>{" "}
+          {currentUser.phoneNumber}
+        </p>
       </div>: null}
       </div>
     );

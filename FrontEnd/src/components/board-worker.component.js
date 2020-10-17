@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
+import 'react-tabs/style/react-tabs.css';
 
 export default class BoardWorker extends Component {
   constructor(props) {
@@ -35,8 +36,9 @@ export default class BoardWorker extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          <h3>Provide Availability</h3>
         </header>
+        Functionality not added
       </div>
     );
   }

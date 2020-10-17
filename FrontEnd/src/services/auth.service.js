@@ -1,8 +1,8 @@
 import axios from "axios";
 
-//const API_URL = "http://localhost:8080/";
+const API_URL = "http://localhost:8080/api/auth/";
 //replace this line with the url for your postman mock, or use the above line instead to access the backend
-const API_URL = "https://85614fc4-77ad-44a6-bc0a-fa2f51509bf7.mock.pstmn.io/"
+//const API_URL = "https://85614fc4-77ad-44a6-bc0a-fa2f51509bf7.mock.pstmn.io/"
 
 class AuthService {
   login(username, password) {
@@ -13,7 +13,7 @@ class AuthService {
       })
       .then(response => {
         console.log(response)
-        if (response.data.accessToken) {
+        if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
 
@@ -25,29 +25,32 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  registerUser(username, email, password) {
-    return axios.post(API_URL + "signup", {
+  registerUser(username, email, password, roles) {
+    return axios.post(API_URL + "registerUser", {
       username,
       email,
-      password
+      password,
+      roles
     });
   }
 
-  registerBusiness(businessName, ABN, category) {
-    return axios.post(API_URL + "businessSignup", {
-      businessName,
-      ABN,
+  registerBusiness(name, abn, category) {
+    return axios.post(API_URL + "registerBusiness", {
+      name,
+      abn,
       category
     });
   }
 
-  editDetails(username, email, password, address, phone){
-    return axios.post(API_URL + "editDetails", {
+  editDetails(id, username, email, password, address, phone, roles){
+    return axios.post(API_URL + "updateUser", {
+      id,
       username,
       email,
       password,
       address,
-      phone
+      phone,
+      roles
     });
   }
 
